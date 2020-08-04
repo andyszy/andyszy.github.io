@@ -14,7 +14,7 @@ map.addControl(
 );
 
 var peakLayerName = 'peaks-overpass'; // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
-map.on('click', function(e) {
+map.on('k', function(e) {
 	var features = map.queryRenderedFeatures(e.point, {
 		layers: [peakLayerName]
 	});
@@ -45,18 +45,24 @@ var toggleableLayers = [{
 }, {
 	id: 'settlement-subdivision-label',
 	displayName: "Neighborhoods"
+}, {
+	id: 'mapbox-terrain-rgb',
+	displayName: "Shading"
 }];
 
 // set up the corresponding toggle button for each layer
 for (var i = 0; i < toggleableLayers.length; i++) {
 	var layer = toggleableLayers[i];
-	var link = document.createElement('a');
-	link.href = '#';
-	link.className = 'active';
-	link.textContent = layer.displayName;
-	link.id = layer.id;
+	var checkbox = document.createElement('input');
+	checkbox.type="checkbox";
+	checkbox.checked = 'checked';
+	checkbox.name = layer.id;
+	checkbox.id = layer.id;
+	var label = document.createElement('label');
+	label.textContent = layer.displayName;
+	label.for = layer.id;
 
-	link.onclick = function(e) {
+	checkbox.onclick = function(e) {
 		var clickedLayer = this.id;
 		e.preventDefault();
 		e.stopPropagation();
@@ -66,15 +72,16 @@ for (var i = 0; i < toggleableLayers.length; i++) {
 		// toggle layer visibility by changing the layout object's visibility property
 		if (visibility === 'visible') {
 			map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-			this.className = '';
+			this.checked = '';
 		} else {
-			this.className = 'active';
+			this.checked = 'checked';
 			map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
 		}
 	};
 
-	var layers = document.getElementById('menu');
-	layers.appendChild(link);
+	var layers = document.getElementById('mapOptions');
+	layers.appendChild(checkbox);
+	layers.appendChild(label);
 }
 
 
