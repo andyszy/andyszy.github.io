@@ -150,7 +150,7 @@ function paintContours(min, max) {
 	// console.log(elevationSteps);
 
 	var fillColorProperty = ["step", ["get", "ele"],
-		"hsl(45, 100%, 100%)" /* rest of mapbox property to be filled in below */
+		"hsla(45, 100%, 100%,0%)" /* rest of mapbox property to be filled in below */
 	]; 
 	var lineColorProperty = ["step", ["get", "ele"],
 		"hsl(45, 100%, 100%)" /* rest of mapbox property to be filled in below */
