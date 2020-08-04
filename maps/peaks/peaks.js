@@ -12,3 +12,24 @@ accessToken: mapboxgl.accessToken,
 mapboxgl: mapboxgl
 })
 );
+
+map.on('click', function(e) {
+  var features = map.queryRenderedFeatures(e.point, {
+    layers: ['peaks-overpass'] // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
+  });
+
+  if (!features.length) {
+    return;
+  }
+
+  var feature = features[0];
+  var html = '<h3>' + feature.properties.name + '</h3><p>' + feature.properties.ele + ' m</p>';
+  if (feature.properties['gnis:feature_id'])
+	  html += '<p><a href="https://geonames.usgs.gov/apex/f?p=GNISPQ:3:::NO::P3_FID:' + feature.properties['gnis:feature_id'] + '">USGS</a></p>';
+	https://geonames.usgs.gov/apex/f?p=GNISPQ:3:::NO::P3_FID:236709
+  var popup = new mapboxgl.Popup({ offset: [0, -15] })
+    .setLngLat(feature.geometry.coordinates)
+    .setHTML(html)
+    .addTo(map);
+  console.log(feature);
+});
