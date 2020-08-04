@@ -14,11 +14,11 @@ map.addControl(
 );
 
 var peakLayerName = 'peaks-overpass'; // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
-map.on('k', function(e) {
+map.on('click', function(e) {
+
 	var features = map.queryRenderedFeatures(e.point, {
 		layers: [peakLayerName]
 	});
-
 	if (!features.length) {
 		return;
 	}
