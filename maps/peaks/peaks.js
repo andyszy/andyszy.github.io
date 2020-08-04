@@ -137,6 +137,7 @@ for (var i = 0; i < numSteps; i++) {
 }
 
 var elevationSteps;
+var displayIncrement = 10; /* round to nearest 10 meters before displaying, to match actual resolution of contour data. TODO(andys) make this based on actual data rather than hard-coded? */
 
 function paintContours(min, max) {
 	var span = max - min;
@@ -164,7 +165,15 @@ function paintContours(min, max) {
 		fillColorProperty.push(ele, fillColor);
 		lineColorProperty.push(ele, lineColor);
 		colorElements[i].style.backgroundColor = fillColor;
-		colorElements[i].textContent = Number(ele).toFixed(0);
+		var eleForDisplay = ele - (ele % displayIncrement); // round this down to the nearest multiple of the allowable increment
+
+		colorElements[i].textContent = Number(eleForDisplay).toFixed(0);
+		if ((i > 0) && (colorElements[i].textContent == colorElements[i-1].textContent)) {
+			colorElements[i].style.display = 'none';
+		} else{
+			colorElements[i].style.display = '';
+		}
+		
 	}
 	map.setPaintProperty('contour', 'fill-color', fillColorProperty);
 	map.setPaintProperty('contour lines', 'line-color', lineColorProperty);
