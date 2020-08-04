@@ -78,11 +78,11 @@ body {
 
 #scale div {
 	float:left;
-	width:20%;
 	height:100%;
+	overflow:hidden;
 }
 #scale div {
-	text-align:center;
+	text-align:left;
 }
 #scale, #scaleLabel {
 	font-size:10px;

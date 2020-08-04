@@ -78,14 +78,6 @@ for (var i = 0; i < toggleableLayers.length; i++) {
 }
 
 
-var scale = document.getElementById('scale');
-var colorElements = Array();
-for (var i = 0; i < 5; i++) {
-	var color = document.createElement('div');
-	scale.appendChild(color);
-	colorElements.push(color);
-}
-
 
 // Pct should be a value between [0.0,1.0] representing normalized elevation
 function getColorFromRamp(pct) {
@@ -121,53 +113,54 @@ function refreshContourDisplay(min, max) {
 		paintContours(min, max);
 	} else {
 		paintContours(0, 250); // initialize with reasonable SF values. TODO(andys) find a less hacky way
-		
+
 	}
 }
+
+var numSteps = 5;
+// TODO(andys): Make this dynamic based on zoom level
+
+var scale = document.getElementById('scale');
+var colorElements = Array();
+for (var i = 0; i < numSteps; i++) {
+	var color = document.createElement('div');
+	scale.appendChild(color);
+	colorElements.push(color);
+	color.style.width = Number(100/numSteps)+"%";
+}
+
+var elevationSteps;
 
 function paintContours(min, max) {
 	var span = max - min;
 
-	elevationSteps = [min, min + 0.2 * span, min + 0.4 * span, min + 0.8 * span, max];
+	elevationSteps = Array();
+	for (var i = 0; i < numSteps; i++) {
+		elevationSteps.push(Number(min + (i / numSteps) * span));
+	}
+
 	// elevationSteps = [0, 50, 100, 200, 250];
 	// console.log(elevationSteps);
 
-	map.setPaintProperty('contours-HDR', 'fill-color', [
-		"step", ["get", "ele"],
-		"hsl(45, 100%, 100%)",
-		elevationSteps[0], getColorFromRamp(0),
-		elevationSteps[1], getColorFromRamp(.25),
-		elevationSteps[2], getColorFromRamp(.5),
-		elevationSteps[3], getColorFromRamp(.75),
-		elevationSteps[4], getColorFromRamp(1)
-	]);
+	var fillColorProperty = ["step", ["get", "ele"],
+		"hsl(45, 100%, 100%)" /* rest of mapbox property to be filled in below */
+	]; 
+	var lineColorProperty = ["step", ["get", "ele"],
+		"hsl(45, 100%, 100%)" /* rest of mapbox property to be filled in below */
+	]; 
 	
-	// map.setPaintProperty('contours-HDR', 'fill-color', [
-	// 	"interpolate", ["linear"], ["get", "ele"],
-	// 	-400, "hsl(45, 100%, 100%)",
-	// 	elevationSteps[0], getColorFromRamp(0),
-	// 	elevationSteps[1], getColorFromRamp(.25),
-	// 	elevationSteps[2], getColorFromRamp(.5),
-	// 	elevationSteps[3], getColorFromRamp(.75),
-	// 	elevationSteps[4], getColorFromRamp(1)
-	// ]);
-	
-	
-	for (var i = 0; i < colorElements.length; i++) {
-		var elem = colorElements[i];
-		elem.style.backgroundColor = getColorFromRamp(0.25*i);
-		elem.textContent = Number(elevationSteps[i]).toFixed(0);
+	for (var i = 0; i < numSteps; i++) {
+		var ele = elevationSteps[i];
+		var fillColor = getColorFromRamp(i / (numSteps-1));
+		var lineColor = getColorFromRamp((i+1) / (numSteps-1)); // Contour line uses the color from the next elevation up
+		
+		fillColorProperty.push(ele, fillColor);
+		lineColorProperty.push(ele, lineColor);
+		colorElements[i].style.backgroundColor = fillColor;
+		colorElements[i].textContent = Number(ele).toFixed(0);
 	}
-
-	map.setPaintProperty('contour lines', 'line-color', [
-		"step", ["get", "ele"],
-		"hsl(45, 100%, 100%)",
-		elevationSteps[0], getColorFromRamp(.25),
-		elevationSteps[1], getColorFromRamp(.5),
-		elevationSteps[2], getColorFromRamp(.75),
-		elevationSteps[3], getColorFromRamp(1),
-		elevationSteps[4], getColorFromRamp(1.25)
-	]);
+	map.setPaintProperty('contours-HDR', 'fill-color', fillColorProperty);
+	map.setPaintProperty('contour lines', 'line-color', lineColorProperty);
 }
 map.on('load', function() {
 	for (var i = 0; i < toggleableLayers.length; i++) {
