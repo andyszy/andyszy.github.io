@@ -13,9 +13,10 @@ map.addControl(
 	})
 );
 
+var peakLayerName = 'peaks-overpass';  // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
 map.on('click', function(e) {
 	var features = map.queryRenderedFeatures(e.point, {
-		layers: ['peaks-overpass'] // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
+		layers: [peakLayerName]
 	});
 
 	if (!features.length) {
@@ -35,3 +36,54 @@ map.on('click', function(e) {
 			.addTo(map);
 	console.log(feature);
 });
+
+// enumerate ids of the layers
+var toggleableLayers = [
+	{
+		id: peakLayerName,
+		displayName: "Peaks"
+	},
+	{
+		id: 'settlement-subdivision-label',
+		displayName: "Neighborhoods"
+	}
+];
+
+// set up the corresponding toggle button for each layer
+for (var i = 0; i < toggleableLayers.length; i++) {
+	var layer = toggleableLayers[i];
+	var link = document.createElement('a');
+	link.href = '#';
+	link.className = 'active';
+	link.textContent = layer.displayName;
+	link.id = layer.id;
+
+	link.onclick = function(e) {
+		var clickedLayer = this.id;
+		e.preventDefault();
+		e.stopPropagation();
+
+		var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+		// toggle layer visibility by changing the layout object's visibility property
+		if (visibility === 'visible') {
+			map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+			this.className = '';
+		} else {
+			this.className = 'active';
+			map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+		}
+	};
+
+	var layers = document.getElementById('menu');
+	layers.appendChild(link);
+}
+
+
+map.on('load', function() {
+	for (var i = 0; i < toggleableLayers.length; i++) {
+		var layer = toggleableLayers[i];
+		map.setLayoutProperty(layer.id, 'visibility', 'visible');
+	}
+});
+
