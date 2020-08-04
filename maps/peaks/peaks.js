@@ -100,7 +100,7 @@ function refreshContourDisplay(min, max) {
 	//Calculate min and max elevation from the contours in the viewport:
 
 	var features = map.queryRenderedFeatures({
-		layers: ['contours-HDR']
+		layers: ['contour']
 	});
 	// console.log(features)
 
@@ -166,7 +166,7 @@ function paintContours(min, max) {
 		colorElements[i].style.backgroundColor = fillColor;
 		colorElements[i].textContent = Number(ele).toFixed(0);
 	}
-	map.setPaintProperty('contours-HDR', 'fill-color', fillColorProperty);
+	map.setPaintProperty('contour', 'fill-color', fillColorProperty);
 	map.setPaintProperty('contour lines', 'line-color', lineColorProperty);
 }
 map.on('load', function() {
@@ -175,24 +175,6 @@ map.on('load', function() {
 		map.setLayoutProperty(layer.id, 'visibility', 'visible');
 	}
 
-	// Hide static contour layers from mapbox studio
-	// map.setLayoutProperty('contour lines', 'visibility', 'none');
-	map.setLayoutProperty('contour', 'visibility', 'none');
-
-	// Add HDR contour layers
-
-	map.addLayer({
-		"id": "contours-HDR",
-		"type": "fill",
-		"source": {
-			type: 'vector',
-			url: 'mapbox://mapbox.mapbox-terrain-v2'
-		},
-		"source-layer": "contour",
-		'layout': {
-			'visibility': 'visible'
-		}
-	}, 'contour lines'); // Add contours below contour lines and hillshading
 	refreshContourDisplay();
 
 });
