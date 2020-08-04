@@ -23,6 +23,7 @@ body {
 	background-color: rgba(255,255,255,0.5);
 	color: #000;
 	float: left;
+	padding: 10px;
 }
 
 #menu {
@@ -65,4 +66,24 @@ body {
  
 #menu a.active:hover {
 	background: #3074a4;
+}
+
+#scale {
+	position:relative;
+	width: 300px;
+	height: 20px;
+	background: white;
+	margin-top:10px;
+}
+
+#scale div {
+	float:left;
+	width:20%;
+	height:100%;
+}
+#scale div {
+	text-align:center;
+}
+#scale, #scaleLabel {
+	font-size:10px;
 }

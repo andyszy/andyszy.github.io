@@ -13,7 +13,7 @@ map.addControl(
 	})
 );
 
-var peakLayerName = 'peaks-overpass';  // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
+var peakLayerName = 'peaks-overpass'; // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
 map.on('click', function(e) {
 	var features = map.queryRenderedFeatures(e.point, {
 		layers: [peakLayerName]
@@ -36,20 +36,16 @@ map.on('click', function(e) {
 			.setLngLat(feature.geometry.coordinates)
 			.setHTML(html)
 			.addTo(map);
-	console.log(feature);
 });
 
 // enumerate ids of the layers
-var toggleableLayers = [
-	{
-		id: peakLayerName,
-		displayName: "Peaks"
-	},
-	{
-		id: 'settlement-subdivision-label',
-		displayName: "Neighborhoods"
-	}
-];
+var toggleableLayers = [{
+	id: peakLayerName,
+	displayName: "Peaks"
+}, {
+	id: 'settlement-subdivision-label',
+	displayName: "Neighborhoods"
+}];
 
 // set up the corresponding toggle button for each layer
 for (var i = 0; i < toggleableLayers.length; i++) {
@@ -82,10 +78,133 @@ for (var i = 0; i < toggleableLayers.length; i++) {
 }
 
 
+var scale = document.getElementById('scale');
+var colorElements = Array();
+for (var i = 0; i < 5; i++) {
+	var color = document.createElement('div');
+	scale.appendChild(color);
+	colorElements.push(color);
+}
+
+
+// Pct should be a value between [0.0,1.0] representing normalized elevation
+function getColorFromRamp(pct) {
+	var h = 45 + Math.pow(pct, 2.5) * (-22); // red shift comes only at the extreme elevations
+	var s = 68 + pct * 9;
+	var l = 85 + pct * (-20);
+	return "hsl(" + Number(h).toFixed(0) + ", " + Number(s).toFixed(0) + "%, " + Number(l).toFixed(0) + "%)";
+}
+
+
+function refreshContourDisplay(min, max) {
+
+	//Calculate min and max elevation from the contours in the viewport:
+
+	var features = map.queryRenderedFeatures({
+		layers: ['contours-HDR']
+	});
+	// console.log(features)
+
+	if (features.length) {
+		var min = Number.MAX_SAFE_INTEGER;
+		var max = Number.MIN_SAFE_INTEGER;
+		for (var i = 0; i < features.length; i++) {
+			var ele = features[i].properties.ele;
+			if (ele < min)
+				min = ele;
+			if (ele > max)
+				max = ele;
+		}
+
+		if (min < 0) min = 0; // Don't allow minimum elevations below sea level
+
+		paintContours(min, max);
+	} else {
+		paintContours(0, 250); // initialize with reasonable SF values. TODO(andys) find a less hacky way
+		
+	}
+}
+
+function paintContours(min, max) {
+	var span = max - min;
+
+	elevationSteps = [min, min + 0.2 * span, min + 0.4 * span, min + 0.8 * span, max];
+	// elevationSteps = [0, 50, 100, 200, 250];
+	// console.log(elevationSteps);
+
+	map.setPaintProperty('contours-HDR', 'fill-color', [
+		"step", ["get", "ele"],
+		"hsl(45, 100%, 100%)",
+		elevationSteps[0], getColorFromRamp(0),
+		elevationSteps[1], getColorFromRamp(.25),
+		elevationSteps[2], getColorFromRamp(.5),
+		elevationSteps[3], getColorFromRamp(.75),
+		elevationSteps[4], getColorFromRamp(1)
+	]);
+	
+	// map.setPaintProperty('contours-HDR', 'fill-color', [
+	// 	"interpolate", ["linear"], ["get", "ele"],
+	// 	-400, "hsl(45, 100%, 100%)",
+	// 	elevationSteps[0], getColorFromRamp(0),
+	// 	elevationSteps[1], getColorFromRamp(.25),
+	// 	elevationSteps[2], getColorFromRamp(.5),
+	// 	elevationSteps[3], getColorFromRamp(.75),
+	// 	elevationSteps[4], getColorFromRamp(1)
+	// ]);
+	
+	
+	for (var i = 0; i < colorElements.length; i++) {
+		var elem = colorElements[i];
+		elem.style.backgroundColor = getColorFromRamp(0.25*i);
+		elem.textContent = Number(elevationSteps[i]).toFixed(0);
+	}
+
+	map.setPaintProperty('contour lines', 'line-color', [
+		"step", ["get", "ele"],
+		"hsl(45, 100%, 100%)",
+		elevationSteps[0], getColorFromRamp(.25),
+		elevationSteps[1], getColorFromRamp(.5),
+		elevationSteps[2], getColorFromRamp(.75),
+		elevationSteps[3], getColorFromRamp(1),
+		elevationSteps[4], getColorFromRamp(1.25)
+	]);
+}
 map.on('load', function() {
 	for (var i = 0; i < toggleableLayers.length; i++) {
 		var layer = toggleableLayers[i];
 		map.setLayoutProperty(layer.id, 'visibility', 'visible');
 	}
+
+	// Hide static contour layers from mapbox studio
+	// map.setLayoutProperty('contour lines', 'visibility', 'none');
+	map.setLayoutProperty('contour', 'visibility', 'none');
+
+	// Add HDR contour layers
+
+	map.addLayer({
+		"id": "contours-HDR",
+		"type": "fill",
+		"source": {
+			type: 'vector',
+			url: 'mapbox://mapbox.mapbox-terrain-v2'
+		},
+		"source-layer": "contour",
+		'layout': {
+			'visibility': 'visible'
+		}
+	}, 'contour lines'); // Add contours below contour lines and hillshading
+	refreshContourDisplay();
+
 });
 
+map.on('sourcedata', (e) => {
+	if (map.loaded()) {
+		refreshContourDisplay();
+		map.off('sourcedata');
+	}
+});
+
+
+map.on('move', function() {
+	refreshContourDisplay();
+});
