@@ -187,6 +187,6 @@ map.on('sourcedata', (e) => {
 });
 
 
-map.on('move', function() {
+map.on('moveend', function() { // Could also do on "move" but it'd be less performant
 	refreshContourDisplay();
 });
