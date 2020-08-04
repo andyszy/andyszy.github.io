@@ -117,7 +117,7 @@ function refreshContourDisplay(min, max) {
 	}
 }
 
-var numSteps = 5;
+var numSteps = 8;
 // TODO(andys): Make this dynamic based on zoom level
 
 var scale = document.getElementById('scale');
