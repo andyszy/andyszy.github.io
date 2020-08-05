@@ -41,13 +41,16 @@ map.on('click', function(e) {
 // enumerate ids of the layers
 var toggleableLayers = [{
 	id: peakLayerName,
-	displayName: "Peaks"
+	displayName: "Peaks",
+	default: true
 }, {
 	id: 'settlement-subdivision-label',
-	displayName: "Neighborhoods"
+	displayName: "Neighborhoods",
+	default: true
 }, {
 	id: 'mapbox-terrain-rgb',
-	displayName: "Shading"
+	displayName: "Shading",
+	default: true // TODO(andys) decide if the map is better with shading off
 }];
 
 // set up the corresponding toggle button for each layer
@@ -55,7 +58,7 @@ for (var i = 0; i < toggleableLayers.length; i++) {
 	var layer = toggleableLayers[i];
 	var checkbox = document.createElement('input');
 	checkbox.type="checkbox";
-	checkbox.checked = 'checked';
+	checkbox.checked = layer.default ? 'checked' : '';
 	checkbox.name = layer.id;
 	checkbox.id = layer.id;
 	var label = document.createElement('label');
@@ -181,7 +184,7 @@ function paintContours(min, max) {
 map.on('load', function() {
 	for (var i = 0; i < toggleableLayers.length; i++) {
 		var layer = toggleableLayers[i];
-		map.setLayoutProperty(layer.id, 'visibility', 'visible');
+		map.setLayoutProperty(layer.id, 'visibility', layer.default ? 'visible' : 'none');
 	}
 
 	refreshContourDisplay();
