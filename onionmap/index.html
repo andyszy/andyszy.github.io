@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Onion Map</title>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <link href='onionmap.css' rel='stylesheet' />
+</head>
+
+<!--
+TODO(andys)
+	Programmatically shaded contours, HDR style
+	Option to focus on staircases, paths, roads 
+ -->
+<body>
+	<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+	
+	<link
+	rel="stylesheet"
+	href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+	type="text/css"
+	/>
+	<!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+	<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+	<div id='map' class='container'></div>
+	<div id='legend'>
+		<span class="productName">Onion Map</span>
+		by Andy Szybalski
+		<section>
+			<div id="scaleLabel"><span class="subhead">Elevation</span> (m)</div>
+			<div id="scale"></div>
+		</section>
+		<section>
+			<div id="mapOptions" >
+				<span class="subhead">Show: </span>
+			</div>
+		</section>
+	</div>
+	
+	
+	<script src="onionmap.js"></script>
+	
+	</div>
+ </body>
+</html>
