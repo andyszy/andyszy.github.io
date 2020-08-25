@@ -98,7 +98,7 @@ function getColorFromRamp(pct) {
 }
 
 
-function refreshContourDisplay(min, max) {
+function refreshContourDisplay() {
 
 	//Calculate min and max elevation from the contours in the viewport:
 
