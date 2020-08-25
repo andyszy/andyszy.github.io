@@ -127,7 +127,7 @@ function refreshContourDisplay() {
 	}
 }
 
-var numSteps = 20;
+var numSteps = 8;
 // TODO(andys): Make this dynamic based on zoom level
 
 var scale = document.getElementById('scale');
@@ -142,28 +142,42 @@ for (var i = 0; i < numSteps; i++) {
 var elevationSteps;
 var displayIncrement = 10; /* round to nearest 10 meters before displaying, to match actual resolution of contour data. TODO(andys) make this based on actual data rather than hard-coded? */
 
+function nearestPowerOfTwo(aSize) {
+	return Math.pow( 2, Math.ceil( Math.log( aSize ) / Math.log( 2 ) ) );
+}
+
+// Rounds x to the nearest multiple of y
+function roundToNearest(x,y)
+{
+    return Math.ceil(x/y)*y;
+}
+
 function paintContours(min, max) {
 	var span = max - min;
 
 	elevationSteps = Array();
-	// for (var i = 0; i < numSteps; i++) {
-	// 	elevationSteps.push(Number(min + (i / numSteps) * span));
-	// }
 	
-	// Handle case where we need a zero contour:
-	if (min < displayIncrement) {
-		elevationSteps.push(Number(0));
-	}
+	// // Handle case where we need a zero contour:
+ // 	if (min < displayIncrement) {
+ // 		elevationSteps.push(Number(0));
+ // 	}
 	
-	var multiple = 1.3; // TODO tweak this
-	for (var i = displayIncrement; i < max; i = i*multiple) {
-		if (i >= min) {
-			elevationSteps.push(Number(i));
-		}
+	var logmin = Math.log2(min/displayIncrement);
+	if (logmin < 0) 
+		logmin = 0;
+	var logmax = Math.log2(max/displayIncrement);
+	var logspan = logmax-logmin;
+	var logincrement = nearestPowerOfTwo(logspan/numSteps);
+	
+	logmin = roundToNearest(logmin, logincrement);
+	
+	console.log('{' + logmin + ','+ logmax +'}')
+	for (var i = logmin; i < logmax; i += logincrement) {
+		elevationSteps.push(displayIncrement*(2**i));
 	}
 
 	// elevationSteps = [0, 50, 100, 200, 250];
-	// console.log(elevationSteps);
+	console.log(elevationSteps);
 
 	var fillColorProperty = ["step", ["get", "ele"],
 		"hsla(45, 100%, 100%,0%)" /* rest of mapbox property to be filled in below */
