@@ -162,10 +162,10 @@ function paintContours(min, max) {
  // 		elevationSteps.push(Number(0));
  // 	}
 	
-	var logmin = Math.log2(min/displayIncrement);
+	var logmin = Math.log10(min/displayIncrement);
 	if (logmin < 0) 
 		logmin = 0;
-	var logmax = Math.log2(max/displayIncrement);
+	var logmax = Math.log10(max/displayIncrement);
 	var logspan = logmax-logmin;
 	var logincrement = nearestPowerOfTwo(logspan/numSteps);
 	
@@ -173,7 +173,7 @@ function paintContours(min, max) {
 	
 	console.log('{' + logmin + ','+ logmax +'}')
 	for (var i = logmin; i < logmax; i += logincrement) {
-		elevationSteps.push(displayIncrement*(2**i));
+		elevationSteps.push(displayIncrement*(10**i));
 	}
 
 	// elevationSteps = [0, 50, 100, 200, 250];
