@@ -162,14 +162,19 @@ function paintContours(min, max) {
  // 		elevationSteps.push(Number(0));
  // 	}
 	
+
 	var logmin = Math.log10(min/displayIncrement);
-	if (logmin < 0) 
+	if (logmin < 0 || isNaN(logmin)) 
 		logmin = 0;
 	var logmax = Math.log10(max/displayIncrement);
+	if (logmax < 0  || isNaN(logmin))
+		logmax = 0;
 	var logspan = logmax-logmin;
 	var logincrement = nearestPowerOfTwo(logspan/numSteps);
 	
 	logmin = roundToNearest(logmin, logincrement);
+	if (logmin < 0 || isNaN(logmin)) 
+		logmin = 0;
 	
 	console.log('{' + logmin + ','+ logmax +'}')
 	for (var i = logmin; i < logmax; i += logincrement) {
@@ -208,8 +213,10 @@ function paintContours(min, max) {
 		}
 		
 	}
-	map.setPaintProperty('contour', 'fill-color', fillColorProperty);
-	map.setPaintProperty('contour lines', 'line-color', lineColorProperty);
+	if (elevationSteps.length > 0) {
+		map.setPaintProperty('contour', 'fill-color', fillColorProperty);
+		map.setPaintProperty('contour lines', 'line-color', lineColorProperty);
+	}
 }
 map.on('load', function() {
 	for (var i = 0; i < toggleableLayers.length; i++) {
