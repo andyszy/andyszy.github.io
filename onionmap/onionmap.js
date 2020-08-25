@@ -107,6 +107,8 @@ function refreshContourDisplay() {
 	});
 	// console.log(features)
 
+	// TODO: Find a way to filter out contours that aren't actually in the viewport 
+	
 	if (features.length) {
 		var min = Number.MAX_SAFE_INTEGER;
 		var max = Number.MIN_SAFE_INTEGER;
@@ -128,7 +130,6 @@ function refreshContourDisplay() {
 }
 
 var numSteps = 8;
-// TODO(andys): Make this dynamic based on zoom level
 
 var scale = document.getElementById('scale');
 var colorElements = Array();
