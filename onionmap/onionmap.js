@@ -1,3 +1,5 @@
+// TODO: Put elevation labels directly on key contour lines so we don't need the legend.
+
 mapboxgl.accessToken = 'pk.eyJ1IjoiYW5keXN6eSIsImEiOiJjajNobHFlOGUwMGNvMzJvenZpNW9jcXZ1In0._TLRxUmkf7pOTP4hgziZSg'; // replace this with your access token
 var map = new mapboxgl.Map({
 	container: 'map',
@@ -177,13 +179,13 @@ function paintContours(min, max) {
 	if (logmin < 0 || isNaN(logmin)) 
 		logmin = 0;
 	
-	console.log('{' + logmin + ','+ logmax +'}')
+	// console.log('{' + logmin + ','+ logmax +'}')
 	for (var i = logmin; i < logmax; i += logincrement) {
 		elevationSteps.push(displayIncrement*(10**i));
 	}
 
 	// elevationSteps = [0, 50, 100, 200, 250];
-	console.log(elevationSteps);
+	// console.log(elevationSteps);
 
 	var fillColorProperty = ["step", ["get", "ele"],
 		"hsla(45, 100%, 100%,0%)" /* rest of mapbox property to be filled in below */
