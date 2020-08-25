@@ -145,6 +145,8 @@ for (var i = 0; i < numSteps; i++) {
 var elevationSteps;
 var displayIncrement = 10; /* round to nearest 10 meters before displaying, to match actual resolution of contour data. TODO(andys) make this based on actual data rather than hard-coded? */
 
+// TODO: alternate idea, hardcode multiples of 10,20,50,100,250,500,1000 etc to be allowable increments, and skip some of the fancy logarithmic business?
+
 function nearestPowerOfTwo(aSize) {
 	return Math.pow( 2, Math.ceil( Math.log( aSize ) / Math.log( 2 ) ) );
 }
