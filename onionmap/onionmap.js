@@ -127,7 +127,7 @@ function refreshContourDisplay() {
 	}
 }
 
-var numSteps = 8;
+var numSteps = 20;
 // TODO(andys): Make this dynamic based on zoom level
 
 var scale = document.getElementById('scale');
@@ -146,8 +146,20 @@ function paintContours(min, max) {
 	var span = max - min;
 
 	elevationSteps = Array();
-	for (var i = 0; i < numSteps; i++) {
-		elevationSteps.push(Number(min + (i / numSteps) * span));
+	// for (var i = 0; i < numSteps; i++) {
+	// 	elevationSteps.push(Number(min + (i / numSteps) * span));
+	// }
+	
+	// Handle case where we need a zero contour:
+	if (min < displayIncrement) {
+		elevationSteps.push(Number(0));
+	}
+	
+	var multiple = 1.3; // TODO tweak this
+	for (var i = displayIncrement; i < max; i = i*multiple) {
+		if (i >= min) {
+			elevationSteps.push(Number(i));
+		}
 	}
 
 	// elevationSteps = [0, 50, 100, 200, 250];
@@ -161,9 +173,13 @@ function paintContours(min, max) {
 	]; 
 	
 	for (var i = 0; i < numSteps; i++) {
+		colorElements[i].style.display = 'none';
+	}
+	
+	for (var i = 0; i < elevationSteps.length; i++) {
 		var ele = elevationSteps[i];
-		var fillColor = getColorFromRamp(i / (numSteps-1));
-		var lineColor = getColorFromRamp((i+1) / (numSteps-1)); // Contour line uses the color from the next elevation up
+		var fillColor = getColorFromRamp(i / (elevationSteps.length-1));
+		var lineColor = getColorFromRamp((i+1) / (elevationSteps.length-1)); // Contour line uses the color from the next elevation up
 		
 		fillColorProperty.push(ele, fillColor);
 		lineColorProperty.push(ele, lineColor);
@@ -172,7 +188,7 @@ function paintContours(min, max) {
 
 		colorElements[i].textContent = Number(eleForDisplay).toFixed(0);
 		if ((i > 0) && (colorElements[i].textContent == colorElements[i-1].textContent)) {
-			colorElements[i].style.display = 'none';
+			colorElements[i].style.display = 'none'; // Redundant with previous color legend element
 		} else{
 			colorElements[i].style.display = '';
 		}
