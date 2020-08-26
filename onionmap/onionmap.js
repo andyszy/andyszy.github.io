@@ -189,7 +189,7 @@ function paintContours(min, max) {
 	
 	// console.log('{' + logmin + ','+ logmax +'}')
 	for (var i = logmin; i < logmax; i += logincrement) {
-		elevationSteps.push(displayIncrement*(10**i));
+		elevationSteps.push(displayIncrement*Math.ceil(10**i));
 	}
 
 	// elevationSteps = [0, 50, 100, 200, 250];
@@ -205,6 +205,14 @@ function paintContours(min, max) {
 	for (var i = 0; i < numSteps; i++) {
 		colorElements[i].style.display = 'none';
 	}
+	
+	map.setFilter('contour-label', [
+	  "match",
+	  ["get", "ele"],
+	  elevationSteps,
+	  true,
+	  false
+	]);
 	
 	for (var i = 0; i < elevationSteps.length; i++) {
 		var ele = elevationSteps[i];
