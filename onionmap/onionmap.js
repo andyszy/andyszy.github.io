@@ -99,7 +99,8 @@ function getColorFromRamp(pct) {
 	return "hsl(" + Number(h).toFixed(0) + ", " + Number(s).toFixed(0) + "%, " + Number(l).toFixed(0) + "%)";
 }
 
-
+var previousMin = -1;
+var previousMax = -1;
 function refreshContourDisplay() {
 
 	//Calculate min and max elevation from the contours in the viewport:
@@ -124,7 +125,12 @@ function refreshContourDisplay() {
 
 		if (min < 0) min = 0; // Don't allow minimum elevations below sea level
 
-		paintContours(min, max);
+		// if either min or max has changed, redraw
+		if (min != previousMin || max != previousMax) {
+			paintContours(min, max);
+			previousMin = min;
+			previousMax = max;
+		}
 	} else {
 		paintContours(0, 250); // initialize with reasonable SF values. TODO(andys) find a less hacky way
 
