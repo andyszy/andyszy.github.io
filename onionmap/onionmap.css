@@ -18,14 +18,15 @@ body {
 
 #legend {
 	position: absolute;
-	top: 10px;
+	top: 110px;
+/* TODO 95px; on desktop */
 	left: 10px;
 	background-color: #fff;
 	border-radius: 4px;
 	box-shadow:0 0 10px 2px rgba(0,0,0,.1);
 	color: #000;
 	float: left;
-	padding: 10px;
+	padding: 6px;
 	font-size: 12px;
 	font-weight: normal;
 }
@@ -63,4 +64,25 @@ body {
 .productName {
 	font-size:14px;
 	font-weight:bold;
+}
+#legendIcon {
+	width: 17px;
+	height: 17px;
+	background-image: url(layers.png);
+	background-size: 100% auto;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.showLegend #legendIcon {
+	background-image: url(close.png);
+	margin: 0 10px 10px 0;
+}
+
+#legendContent {
+	display: none;
+}
+
+.showLegend #legendContent {
+	display: block;
 }

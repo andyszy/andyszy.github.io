@@ -9,6 +9,7 @@
   <meta name="author" content="">
 
   <title>Onion Map</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <link href='onionmap.css' rel='stylesheet' />
@@ -32,18 +33,21 @@ TODO(andys)
 	<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 
 	<div id='map' class='container'></div>
-	<div id='legend'>
-		<span class="productName">Onion Map</span>
-		<a style="float:right" href="../index.html#onion-map">About</a>
-		<section>
-			<div id="scaleLabel"><span class="subhead">Elevation</span> (m)</div>
-			<div id="scale"></div>
-		</section>
-		<section>
-			<div id="mapOptions" >
-				<span class="subhead">Show: </span>
-			</div>
-		</section>
+	<div id='legend' class="showLegend">
+		<div id="legendIcon"></div>
+		<span id="legendContent">
+			<span class="productName">Legend</span>
+			<a style="float:right" href="../index.html#onion-map">About</a>
+			<section>
+				<div id="scaleLabel"><span class="subhead">Elevation</span> (m)</div>
+				<div id="scale"></div>
+			</section>
+			<section>
+				<div id="mapOptions" >
+					<span class="subhead">Show: </span>
+				</div>
+			</section>
+		</span>
 	</div>
 	
 	

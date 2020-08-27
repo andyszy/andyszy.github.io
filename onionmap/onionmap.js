@@ -12,7 +12,7 @@ map.addControl(
 	new MapboxGeocoder({
 		accessToken: mapboxgl.accessToken,
 		mapboxgl: mapboxgl
-	})
+	}), 'top-left'
 );
 
 map.addControl(
@@ -21,7 +21,7 @@ map.addControl(
 			enableHighAccuracy: true
 		},
 		trackUserLocation: true
-	})
+	}), 'top-left'
 );
 
 
@@ -268,3 +268,13 @@ map.on('sourcedata', (e) => {
 map.on('moveend', function() { // Could also do on "move" but it'd be less performant
 	refreshContourDisplay();
 });
+
+$('#legendIcon').click(function() {
+  $('#legend').toggleClass( "showLegend" );
+});
+
+
+$(function() {      
+    let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+	 $('#legend').toggleClass( "showLegend" , false);// !isMobile
+ });
