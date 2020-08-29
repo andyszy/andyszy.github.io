@@ -4,8 +4,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYW5keXN6eSIsImEiOiJjajNobHFlOGUwMGNvMzJvenZpN
 var map = new mapboxgl.Map({
 	container: 'map',
 	style: 'mapbox://styles/andyszy/ckchz70872kak1jmhvr407dfr',
-	center: [-122.443983, 37.755773],
-	zoom: 12.81
+	// center: [-122.443983, 37.755773],
+	// zoom: 12.81
 });
 
 map.addControl(
@@ -14,15 +14,14 @@ map.addControl(
 		mapboxgl: mapboxgl
 	}), 'top-left'
 );
-
-map.addControl(
-	new mapboxgl.GeolocateControl({
+var geolocateControl = new mapboxgl.GeolocateControl({
 		positionOptions: {
 			enableHighAccuracy: true
 		},
-		trackUserLocation: true
-	}), 'top-left'
-);
+		trackUserLocation: false,
+		showUserLocation: false
+	});
+map.addControl(geolocateControl, 'top-left');
 
 
 var peakLayerName = 'peaks-overpass'; // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
@@ -252,7 +251,7 @@ map.on('load', function() {
 		var layer = toggleableLayers[i];
 		map.setLayoutProperty(layer.id, 'visibility', layer.default ? 'visible' : 'none');
 	}
-
+	geolocateControl.trigger();
 	refreshContourDisplay();
 
 });
