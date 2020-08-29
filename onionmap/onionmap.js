@@ -1,4 +1,4 @@
-// TODO: Put elevation labels directly on key contour lines so we don't need the legend.
+// TODO:	Option to focus on staircases, paths, roads
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYW5keXN6eSIsImEiOiJjajNobHFlOGUwMGNvMzJvenZpNW9jcXZ1In0._TLRxUmkf7pOTP4hgziZSg'; // replace this with your access token
 var map = new mapboxgl.Map({
@@ -62,7 +62,7 @@ var toggleableLayers = [{
 }, {
 	id: 'mapbox-terrain-rgb',
 	displayName: "Shading",
-	default: true // TODO(andys) decide if the map is better with shading off
+	default: true
 }];
 
 // set up the corresponding toggle button for each layer
