@@ -25,11 +25,11 @@ var geolocateControl = new mapboxgl.GeolocateControl({
 map.addControl(geolocateControl, 'top-left');
 
 
-var peakLayerName = 'peaks-overpass'; // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
+var peakLayerNames = ['peaks-overpass', 'peaks-mapbox']; // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
 map.on('click', function(e) {
 
 	var features = map.queryRenderedFeatures(e.point, {
-		layers: [peakLayerName]
+		layers: peakLayerNames
 	});
 	if (!features.length) {
 		return;
@@ -52,7 +52,7 @@ map.on('click', function(e) {
 
 // enumerate ids of the layers
 var toggleableLayers = [{
-	id: peakLayerName,
+	id: peakLayerNames.join(';'),
 	displayName: "Peaks",
 	default: true
 }, {
@@ -70,7 +70,7 @@ for (var i = 0; i < toggleableLayers.length; i++) {
 	var layer = toggleableLayers[i];
 	var checkbox = document.createElement('input');
 	checkbox.type="checkbox";
-	checkbox.checked = layer.default ? 'checked' : '';
+	checkbox.checked = layer.default;
 	checkbox.name = layer.id;
 	checkbox.id = layer.id;
 	var label = document.createElement('label');
@@ -78,19 +78,18 @@ for (var i = 0; i < toggleableLayers.length; i++) {
 	label.for = layer.id;
 
 	checkbox.onclick = function(e) {
-		var clickedLayer = this.id;
-		e.preventDefault();
-		e.stopPropagation();
-
-		var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-
-		// toggle layer visibility by changing the layout object's visibility property
-		if (visibility === 'visible') {
-			map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-			this.checked = '';
-		} else {
-			this.checked = 'checked';
-			map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+		var layersForCheckbox = this.id.split(';');
+		for (var j = 0; j < layersForCheckbox.length; j++) {
+			var layerName = layersForCheckbox[j];
+			// toggle layer visibility by changing the layout object's visibility property
+			var visibility = map.getLayoutProperty(layerName, 'visibility');
+			if (visibility == "none") {
+				this.checked = true;
+				map.setLayoutProperty(layerName, 'visibility', 'visible');
+			} else {
+				map.setLayoutProperty(layerName, 'visibility', 'none');
+				this.checked = false;
+			}
 		}
 	};
 
