@@ -37,8 +37,9 @@ map.on('click', function(e) {
 
 	var feature = features[0];
 	var html = '<h3>' + feature.properties.name + '</h3>';
-	if (feature.properties['ele'])
-		html += '<p>' + feature.properties.ele + ' m (' + Number(3.28084 * feature.properties.ele).toFixed(0) + ' ft)</p>';
+	var ele = feature.properties['ele'] || feature.properties['elevation_m'];
+	if (ele)
+		html += '<p>' + ele + ' m (' + Number(3.28084 * ele).toFixed(0) + ' ft)</p>';
 	if (feature.properties['gnis:feature_id'])
 		html += '<p><a href="https://geonames.usgs.gov/apex/f?p=GNISPQ:3:::NO::P3_FID:' + feature.properties['gnis:feature_id'] + '">USGS</a></p>';
 	https: //geonames.usgs.gov/apex/f?p=GNISPQ:3:::NO::P3_FID:236709
