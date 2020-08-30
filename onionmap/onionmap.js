@@ -249,7 +249,10 @@ function paintContours(min, max) {
 map.on('load', function() {
 	for (var i = 0; i < toggleableLayers.length; i++) {
 		var layer = toggleableLayers[i];
-		map.setLayoutProperty(layer.id, 'visibility', layer.default ? 'visible' : 'none');
+		var mapboxLayerNames = layer.id.split(';');
+		for (var j = 0; j < mapboxLayerNames.length; j++) {
+			map.setLayoutProperty(mapboxLayerNames[j], 'visibility', layer.default ? 'visible' : 'none');
+		}
 	}
 	geolocateControl.trigger();
 	refreshContourDisplay();
