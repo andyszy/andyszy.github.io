@@ -1,4 +1,5 @@
 // TODO:	Option to focus on staircases, paths, roads
+var urlLoadedWithHash = window.location.hash; // Need to check this before mapbox initializes the map
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYW5keXN6eSIsImEiOiJjajNobHFlOGUwMGNvMzJvenZpNW9jcXZ1In0._TLRxUmkf7pOTP4hgziZSg'; // replace this with your access token
 var map = new mapboxgl.Map({
@@ -255,9 +256,13 @@ map.on('load', function() {
 			map.setLayoutProperty(mapboxLayerNames[j], 'visibility', layer.default ? 'visible' : 'none');
 		}
 	}
-	geolocateControl.trigger();
+	if (urlLoadedWithHash) {
+		// The URL hash already contains a lat/long. Do nothing
+	} else {
+		// Request location permission and go to the user's current location
+		geolocateControl.trigger(); 
+	}
 	refreshContourDisplay();
-
 });
 
 map.on('sourcedata', (e) => {
