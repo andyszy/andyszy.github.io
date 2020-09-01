@@ -115,19 +115,27 @@ var previousMax = -1;
 function refreshContourDisplay() {
 
 	//Calculate min and max elevation from the contours in the viewport:
-
+	var w = map.getContainer().clientWidth;
+	var h = map.getContainer().clientHeight;
+	var margin = Math.min(w,h)*0.2;
+	var bbox = [[0+margin,0+margin],[w-margin,h-margin]];
 	var features = map.queryRenderedFeatures({
 		layers: ['contour']
 	});
+	var featuresInBbox = map.queryRenderedFeatures(bbox, {
+		layers: ['contour']
+	});
+	console.log(featuresInBbox.length + '/' + features.length);
+
 	// console.log(features)
 
-	// TODO: Find a way to filter out contours that aren't actually in the viewport 
+	// TODO: Find a way to filter out contours that aren't actually in the viewport . Problem is that lower contours that ring around a summit will show up in this list even though they are fully obscured by the higher contours.
 	
-	if (features.length) {
+	if (featuresInBbox.length) {
 		var min = Number.MAX_SAFE_INTEGER;
 		var max = Number.MIN_SAFE_INTEGER;
-		for (var i = 0; i < features.length; i++) {
-			var ele = features[i].properties.ele;
+		for (var i = 0; i < featuresInBbox.length; i++) {
+			var ele = featuresInBbox[i].properties.ele;
 			if (ele < min)
 				min = ele;
 			if (ele > max)
@@ -136,6 +144,7 @@ function refreshContourDisplay() {
 
 		if (min < 0) min = 0; // Don't allow minimum elevations below sea level
 
+		console.log(min + ' – ' + max + ' m');
 		// if either min or max has changed, redraw
 		if (min != previousMin || max != previousMax) {
 			paintContours(min, max);
