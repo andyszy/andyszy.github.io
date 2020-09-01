@@ -200,7 +200,12 @@ function paintContours(min, max) {
 	
 	// console.log('{' + logmin + ','+ logmax +'}')
 	for (var i = logmin; i < logmax; i += logincrement) {
-		elevationSteps.push(displayIncrement*Math.ceil(10**i));
+		var ele = displayIncrement*Math.ceil(10**i);
+		if (elevationSteps[elevationSteps.length - 1] == ele) {
+			// This is redundant with the previous step; don't add it.
+		} else {
+			elevationSteps.push(ele);
+		}
 	}
 
 	// elevationSteps = [0, 50, 100, 200, 250];
@@ -236,11 +241,7 @@ function paintContours(min, max) {
 		var eleForDisplay = ele - (ele % displayIncrement); // round this down to the nearest multiple of the allowable increment
 
 		colorElements[i].textContent = Number(eleForDisplay).toFixed(0);
-		if ((i > 0) && (colorElements[i].textContent == colorElements[i-1].textContent)) {
-			colorElements[i].style.display = 'none'; // Redundant with previous color legend element
-		} else{
-			colorElements[i].style.display = '';
-		}
+		colorElements[i].style.display = '';
 		
 	}
 	if (elevationSteps.length > 0) {
