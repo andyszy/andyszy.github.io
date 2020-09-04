@@ -44,23 +44,25 @@
 	<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 
 	<div id='map' class='container'></div>
-	<div id='legend' class="showLegend">
-		<div id="legendIcon"></div>
-		<span id="legendContent">
-			<span class="productName">Legend</span>
-			<a style="float:right" href="../index.html#onion-map">About</a>
-			<section>
-				<div id="scaleLabel"><span class="subhead">Elevation</span> (m)</div>
-				<div id="scale"></div>
-			</section>
-			<section>
-				<div id="mapOptions" >
-					<span class="subhead">Show: </span>
-				</div>
-			</section>
-		</span>
+	<div id="controls">
+		<div class="control" id="about">
+			About Onion Map
+		</div>
+		<div class="control" id='legend' class="showLegend">
+			<div id="legendIcon">Layers</div>
+			<div class="control" id="legendContent">
+				<section>
+					<div id="scaleLabel"><span class="subhead">Elevation</span> (m)</div>
+					<div id="scale"></div>
+				</section>
+				<section>
+					<div id="mapOptions" >
+						<span class="subhead">Show: </span>
+					</div>
+				</section>
+			</div>
+		</div>
 	</div>
-	
 	
 	<script src="onionmap.js"></script>
 	

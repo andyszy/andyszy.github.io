@@ -14,8 +14,10 @@ map.addControl(
 	new MapboxGeocoder({
 		accessToken: mapboxgl.accessToken,
 		mapboxgl: mapboxgl
-	}), 'top-left'
+	}), 'top-right'
 );
+map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
 var geolocateControl = new mapboxgl.GeolocateControl({
 		positionOptions: {
 			enableHighAccuracy: true
@@ -23,7 +25,7 @@ var geolocateControl = new mapboxgl.GeolocateControl({
 		trackUserLocation: false,
 		showUserLocation: false
 	});
-map.addControl(geolocateControl, 'top-left');
+map.addControl(geolocateControl, 'top-right');
 
 
 var peakLayerNames = ['peaks-overpass', 'peaks-mapbox']; // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
@@ -315,6 +317,10 @@ map.on('moveend', function() { // Could also do on "move" but it'd be less perfo
 
 $('#legendIcon').click(function() {
   $('#legend').toggleClass( "showLegend" );
+});
+
+$('#about').click(function() {
+	window.location.href= '../#onion-map';
 });
 
 
