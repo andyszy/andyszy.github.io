@@ -103,10 +103,13 @@ for (var i = 0; i < toggleableLayers.length; i++) {
 
 
 // Pct should be a value between [0.0,1.0] representing normalized elevation
-function getColorFromRamp(pct) {
+function getColorFromRamp(pct, lDelta) {
 	var h = 45 + Math.pow(pct, 2.5) * (-22); // red shift comes only at the extreme elevations
 	var s = 68 + pct * 9;
 	var l = 85 + pct * (-20);
+	if (lDelta) {
+		l = Math.min(100,Math.max(0, l + lDelta));
+	}
 	return "hsl(" + Number(h).toFixed(0) + ", " + Number(s).toFixed(0) + "%, " + Number(l).toFixed(0) + "%)";
 }
 
@@ -217,6 +220,12 @@ function paintContours(min, max) {
 	var lineColorProperty = ["step", ["get", "ele"],
 		"hsl(45, 100%, 100%)" /* rest of mapbox property to be filled in below */
 	]; 
+	var labelColorProperty = ["step", ["get", "ele"],
+		"hsl(45, 100%, 100%)" /* rest of mapbox property to be filled in below */
+	]; 
+	var haloColorProperty = ["step", ["get", "ele"],
+		"hsl(45, 100%, 100%)" /* rest of mapbox property to be filled in below */
+	]; 
 	
 	for (var i = 0; i < numSteps; i++) {
 		colorElements[i].style.display = 'none';
@@ -234,9 +243,14 @@ function paintContours(min, max) {
 		var ele = elevationSteps[i];
 		var fillColor = getColorFromRamp(i / (elevationSteps.length-1));
 		var lineColor = getColorFromRamp((i+1) / (elevationSteps.length-1)); // Contour line uses the color from the next elevation up
-		
+		var labelColor = getColorFromRamp((i+1) / (elevationSteps.length-1), -10);
+		var haloColor = getColorFromRamp((i+1) / (elevationSteps.length-1), +20);
+	
 		fillColorProperty.push(ele, fillColor);
 		lineColorProperty.push(ele, lineColor);
+		labelColorProperty.push(ele, labelColor);
+		haloColorProperty.push(ele, haloColor);
+
 		colorElements[i].style.backgroundColor = fillColor;
 		var eleForDisplay = ele - (ele % displayIncrement); // round this down to the nearest multiple of the allowable increment
 
@@ -247,6 +261,8 @@ function paintContours(min, max) {
 	if (elevationSteps.length > 0) {
 		map.setPaintProperty('contour', 'fill-color', fillColorProperty);
 		map.setPaintProperty('contour lines', 'line-color', lineColorProperty);
+		map.setPaintProperty('contour-label', 'text-color', labelColorProperty);
+		map.setPaintProperty('contour-label', 'text-halo-color', haloColorProperty);
 	}
 }
 map.on('load', function() {
