@@ -18,9 +18,10 @@ body {
 
 #controls {
 	position: absolute;
-	top: 10px;
+	bottom: 40px;
 	left: 10px;
 	position:absolute;	
+	font-size: 12px;
 }
 div.control {
 	margin-right: 10px;
@@ -34,9 +35,7 @@ div.control {
 	padding: 6px;
 }
 #legend {
-	font-size: 12px;
 	font-weight: normal;
-	position:relative;
 }
 #legend .subhead {
 	font-weight: bold;
@@ -69,8 +68,6 @@ div.control {
 	margin-left: 0.5em;
 }
 #about {	
-	float: left;
-	font-size: 12px;
 	font-weight: normal;
 	cursor:pointer;
 }
@@ -88,7 +85,6 @@ div#legend.showLegend {
 	background-color: #f0f0f0;
 }
 
-
 #legendContent {
 	display: none;
 }
@@ -96,7 +92,7 @@ div#legend.showLegend {
 .showLegend #legendContent {
 	display: block;
 	position: absolute;
-	top: 40px;
+	bottom: 40px;
 	left: 0px;
 	background:white;
 }

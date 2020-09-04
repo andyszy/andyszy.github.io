@@ -14,9 +14,9 @@ map.addControl(
 	new MapboxGeocoder({
 		accessToken: mapboxgl.accessToken,
 		mapboxgl: mapboxgl
-	}), 'top-right'
+	}), 'top-left'
 );
-map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
 var geolocateControl = new mapboxgl.GeolocateControl({
 		positionOptions: {
@@ -25,7 +25,7 @@ var geolocateControl = new mapboxgl.GeolocateControl({
 		trackUserLocation: false,
 		showUserLocation: false
 	});
-map.addControl(geolocateControl, 'top-right');
+map.addControl(geolocateControl, 'bottom-right');
 
 
 var peakLayerNames = ['peaks-overpass', 'peaks-mapbox']; // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
