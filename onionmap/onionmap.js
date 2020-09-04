@@ -27,6 +27,10 @@ map.addControl(geolocateControl, 'top-left');
 
 
 var peakLayerNames = ['peaks-overpass', 'peaks-mapbox']; // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
+var streetLayerNames = ['road-simple copy', 'road-label-simple', 'bridge-simple']; 
+var pathLayerNames = ['paths-highlighted', 'steps-highlighted', 'Paths and Steps Label']; 
+var poiLayerNames = ['poi-label', 'airport-label']; 
+
 map.on('click', function(e) {
 
 	var features = map.queryRenderedFeatures(e.point, {
@@ -65,11 +69,24 @@ var toggleableLayers = [{
 	id: 'mapbox-terrain-rgb',
 	displayName: "Shading",
 	default: true
-}];
+}, {
+	id: streetLayerNames.join(';'),
+	displayName: "Streets",
+	default: true
+}, {
+	id: pathLayerNames.join(';'),
+	displayName: "Paths",
+	default: true
+}, {
+	id: poiLayerNames.join(';'),
+	displayName: "Points of Interest",
+	default: true
+},];
 
 // set up the corresponding toggle button for each layer
 for (var i = 0; i < toggleableLayers.length; i++) {
 	var layer = toggleableLayers[i];
+	var checkboxDiv = document.createElement('div');
 	var checkbox = document.createElement('input');
 	checkbox.type="checkbox";
 	checkbox.checked = layer.default;
@@ -77,7 +94,7 @@ for (var i = 0; i < toggleableLayers.length; i++) {
 	checkbox.id = layer.id;
 	var label = document.createElement('label');
 	label.textContent = layer.displayName;
-	label.for = layer.id;
+	label.htmlFor = layer.id;
 
 	checkbox.onclick = function(e) {
 		var layersForCheckbox = this.id.split(';');
@@ -95,9 +112,11 @@ for (var i = 0; i < toggleableLayers.length; i++) {
 		}
 	};
 
+	checkboxDiv.appendChild(checkbox);
+	checkboxDiv.appendChild(label);
+	
 	var layers = document.getElementById('mapOptions');
-	layers.appendChild(checkbox);
-	layers.appendChild(label);
+	layers.appendChild(checkboxDiv);
 }
 
 
