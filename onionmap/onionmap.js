@@ -206,10 +206,8 @@ function refreshRoadElevations() {
 			var ele = getElevationAtLngLat(lnglat);
 			if (feature.id) {
 				map.setFeatureState(feature,{'ele': ele});
-				// map.setFeatureState(feature,{'too-long': ele});
-				// feature.geometry.coordinates = [];
 			} else {
-				console.log('no feature id for this road');
+				// console.log('no feature id for this road');
 			}
 			chewedFeatures.push(feature); // TODO: check for dupes?
 		}
@@ -414,25 +412,6 @@ map.on('load', function() {
 		// Request location permission and go to the user's current location
 		geolocateControl.trigger(); 
 	}
-	var happyRoadOpacityProperty = [
-  	 "interpolate",
-	  ["linear"],
-	  ["zoom"],
-	  13,
-	  0,
-	  15,
-	  1
-	];
-	var roadOpacityProperty = [
-		"case", 
-  	 	["==", ["feature-state", "too-long"], "true"],
- 	  	0,
-		happyRoadOpacityProperty
-	];
-
-	map.setPaintProperty('road-simple copy', 'line-opacity', happyRoadOpacityProperty)
-	map.setPaintProperty('bridge-simple', 'line-opacity', happyRoadOpacityProperty);
-
 	refreshDisplay();
 });
 
