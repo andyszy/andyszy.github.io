@@ -230,7 +230,7 @@ function refreshRoadElevations() {
 				'line-opacity': ROADS_LINE_OPACITY,
 				'line-color': ROADS_LINE_COLOR
 			}
-		}, 'road-simple');
+		}, 'road-simple copy');
 		biteSizeRoadsInitialized = true;
 	} else {
 		map.getSource('bite-size-roads').setData(biteSizeRoadData);
@@ -390,8 +390,6 @@ function paintContours(min, max) {
 		map.setPaintProperty('contour lines', 'line-color', lineColorProperty);
 		map.setPaintProperty('contour-label', 'text-color', labelColorProperty);
 		map.setPaintProperty('contour-label', 'text-halo-color', haloColorProperty);
-		// map.setPaintProperty('road-simple copy', 'line-color', roadColorProperty);
-		// map.setPaintProperty('bridge-simple', 'line-color', roadColorProperty);
 		map.setPaintProperty('road-simple copy', 'line-opacity', 0);
 		map.setPaintProperty('bridge-simple', 'line-opacity', 0);
 		
