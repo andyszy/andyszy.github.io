@@ -28,6 +28,7 @@ var geolocateControl = new mapboxgl.GeolocateControl({
 map.addControl(geolocateControl, 'bottom-right');
 
 
+
 var peakLayerNames = ['peaks-overpass', 'peaks-mapbox']; // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
 var streetLayerNames = ['road-simple copy', 'road-label-simple', 'bridge-simple']; 
 var pathLayerNames = ['paths-highlighted', 'steps-highlighted', 'Paths and Steps Label']; 
@@ -182,31 +183,63 @@ function refreshWaterDisplay() {
 	}
 }
 
-var roadFeatures;
 
-function refreshRoadFeature(feature) {
-	var lnglat = turf.center(feature).geometry;
-	//var lnglat = feature.geometry.coordinates[0][0]; // just use an arbitrary end of the road segment. TODO: make smarter
-	// console.log('lnglat = ' + lnglat);
-	var ele = getElevationAtLngLat(lnglat);
-	if (feature.id) {
-		map.setFeatureState(feature,{'ele': ele});
-	} else {
-		console.log('no feature id for this road'); // TODO: import this layer in code so I can set generateID:true
-	}
-}
+
+var roadFeatures;
+var r;
 
 function refreshRoadElevations() {
+	// Clean up previous bite-size roads
+	if (map.getLayer('bite-size-roads')) {
+		map.removeLayer('bite-size-roads');
+	}
+	
+	if (map.getSource('bite-size-roads')) {
+		map.removeSource('bite-size-roads');
+	}
+
+	// Iterate through roads and chew them
+	var chewedFeatures = []; // TODO: fill in
 	roadFeatures = map.queryRenderedFeatures({
 		layers: ['road-simple copy', 'bridge-simple']
 	});
-	console.log(roadFeatures);
+	// console.log(roadFeatures);
+	r = roadFeatures[0];
 	if (roadFeatures.length) {
 		for (var i = 0; i < roadFeatures.length; i++) {
 			var feature = roadFeatures[i];
-			refreshRoadFeature(feature);
+			var lnglat = turf.center(feature).geometry;
+			//var lnglat = feature.geometry.coordinates[0][0]; // just use an arbitrary end of the road segment. TODO: make smarter
+			// console.log('lnglat = ' + lnglat);
+			var ele = getElevationAtLngLat(lnglat);
+			if (feature.id) {
+				map.setFeatureState(feature,{'ele': ele});
+				// map.setFeatureState(feature,{'too-long': ele});
+				// feature.geometry.coordinates = [];
+			} else {
+				console.log('no feature id for this road'); // TODO: import this layer in code so I can set generateID:true
+			}
+			chewedFeatures.push(feature);
 		}
 	}
+	
+	var biteSizeRoadData = {
+		"type": "FeatureCollection",
+		"features": chewedFeatures
+	};
+
+	// Add them back to the map
+	map.addSource('bite-size-roads', { type: 'geojson', data: biteSizeRoadData, generateId: true });
+	map.addLayer({
+		'id': 'bite-size-roads',
+		'type': 'line',
+		'source': 'bite-size-roads',
+		'paint': {
+			'line-width': ROADS_LINE_WIDTH,
+			'line-opacity': ROADS_LINE_OPACITY,
+			'line-color': ROADS_LINE_COLOR
+		}
+	}, 'road-simple');
 }
 
 function refreshContourDisplay() {
@@ -361,8 +394,12 @@ function paintContours(min, max) {
 		map.setPaintProperty('contour lines', 'line-color', lineColorProperty);
 		map.setPaintProperty('contour-label', 'text-color', labelColorProperty);
 		map.setPaintProperty('contour-label', 'text-halo-color', haloColorProperty);
-		map.setPaintProperty('road-simple copy', 'line-color', roadColorProperty);
-		map.setPaintProperty('bridge-simple', 'line-color', roadColorProperty);
+		// map.setPaintProperty('road-simple copy', 'line-color', roadColorProperty);
+		// map.setPaintProperty('bridge-simple', 'line-color', roadColorProperty);
+		map.setPaintProperty('road-simple copy', 'line-opacity', 0);
+		map.setPaintProperty('bridge-simple', 'line-opacity', 0);
+		
+		map.setPaintProperty('bite-size-roads', 'line-color', roadColorProperty);
 	}
 }
 map.on('load', function() {
@@ -379,6 +416,25 @@ map.on('load', function() {
 		// Request location permission and go to the user's current location
 		geolocateControl.trigger(); 
 	}
+	var happyRoadOpacityProperty = [
+  	 "interpolate",
+	  ["linear"],
+	  ["zoom"],
+	  13,
+	  0,
+	  15,
+	  1
+	];
+	var roadOpacityProperty = [
+		"case", 
+  	 	["==", ["feature-state", "too-long"], "true"],
+ 	  	0,
+		happyRoadOpacityProperty
+	];
+
+	map.setPaintProperty('road-simple copy', 'line-opacity', happyRoadOpacityProperty)
+	map.setPaintProperty('bridge-simple', 'line-opacity', happyRoadOpacityProperty);
+
 	refreshDisplay();
 });
 
@@ -408,3 +464,85 @@ $(function() {
     let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
 	 $('#legend').toggleClass( "showLegend" , false);// !isMobile
  });
+ 
+ 
+var ROADS_LINE_WIDTH = [
+	"interpolate", ["exponential", 1.5],
+	["zoom"],
+	5, [
+		"match", ["get", "class"],
+		[
+			"motorway",
+			"trunk",
+			"primary"
+		],
+		0.375, ["secondary", "tertiary"],
+		0.05,
+		0
+	],
+	13, [
+		"match", ["get", "class"],
+		[
+			"motorway",
+			"trunk",
+			"primary"
+		],
+		2, ["secondary", "tertiary"],
+		1.25, [
+			"motorway_link",
+			"trunk_link",
+			"primary_link",
+			"street",
+			"street_limited"
+		],
+		0.5,
+		0.25
+	],
+	15, [
+		"match", ["get", "class"],
+		[
+			"motorway",
+			"trunk",
+			"primary"
+		],
+		6, ["secondary", "tertiary"],
+		3.75, [
+			"motorway_link",
+			"trunk_link",
+			"primary_link",
+			"street",
+			"street_limited"
+		],
+		1.5,
+		0.75
+	],
+	18, [
+		"match", ["get", "class"],
+		[
+			"motorway",
+			"trunk",
+			"primary"
+		],
+		16, ["secondary", "tertiary"],
+		13, [
+			"motorway_link",
+			"trunk_link",
+			"primary_link",
+			"street",
+			"street_limited"
+		],
+		9,
+		5
+	]
+];
+
+var ROADS_LINE_OPACITY = [
+	"interpolate", ["linear"],
+	["zoom"],
+	13,
+	0,
+	15,
+	1
+];
+
+var ROADS_LINE_COLOR = "hsla(232, 2%, 100%, 0.15)";
