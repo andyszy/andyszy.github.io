@@ -183,6 +183,19 @@ function refreshWaterDisplay() {
 }
 
 var roadFeatures;
+
+function refreshRoadFeature(feature) {
+	var lnglat = turf.center(feature).geometry;
+	//var lnglat = feature.geometry.coordinates[0][0]; // just use an arbitrary end of the road segment. TODO: make smarter
+	// console.log('lnglat = ' + lnglat);
+	var ele = getElevationAtLngLat(lnglat);
+	if (feature.id) {
+		map.setFeatureState(feature,{'ele': ele});
+	} else {
+		console.log('no feature id for this road'); // TODO: import this layer in code so I can set generateID:true
+	}
+}
+
 function refreshRoadElevations() {
 	roadFeatures = map.queryRenderedFeatures({
 		layers: ['road-simple copy', 'bridge-simple']
@@ -191,15 +204,7 @@ function refreshRoadElevations() {
 	if (roadFeatures.length) {
 		for (var i = 0; i < roadFeatures.length; i++) {
 			var feature = roadFeatures[i];
-			var lnglat = turf.center(feature).geometry;
-			//var lnglat = feature.geometry.coordinates[0][0]; // just use an arbitrary end of the road segment. TODO: make smarter
-			// console.log('lnglat = ' + lnglat);
-			var ele = getElevationAtLngLat(lnglat);
-			if (feature.id) {
-				map.setFeatureState(feature,{'ele': ele});
-			} else {
-				console.log('no feature id for this road');
-			}
+			refreshRoadFeature(feature);
 		}
 	}
 }
