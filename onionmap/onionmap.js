@@ -30,7 +30,7 @@ map.addControl(geolocateControl, 'bottom-right');
 
 
 var peakLayerNames = ['peaks-overpass', 'peaks-mapbox']; // "Exported from Overpass " seems to take awhile for names to update after changing in Mapbox Studio 
-var streetLayerNames = ['road-simple copy', 'road-label-simple', 'bridge-simple']; 
+var streetLayerNames = ['road-simple copy', 'road-label-simple', 'bridge-simple', 'bite-size-roads']; 
 var pathLayerNames = ['paths-highlighted', 'steps-highlighted', 'Paths and Steps Label']; 
 var poiLayerNames = ['poi-label', 'airport-label']; 
 
