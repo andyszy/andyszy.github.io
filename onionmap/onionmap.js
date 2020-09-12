@@ -165,6 +165,13 @@ function getColorFromRamp(pct, lDelta) {
 var previousMin = -1;
 var previousMax = -1;
 function refreshDisplay() {
+
+	//Calculate min and max elevation from the contours in the viewport:
+
+	contourFeatures = map.queryRenderedFeatures({
+		layers: ['contour']
+	});
+	
 	refreshWaterDisplay();
 	refreshRoadElevations();
 	refreshContourDisplay(); 
@@ -189,6 +196,7 @@ var roadFeatures;
 var chewedFeatures;
 var biteSizeRoadsInitialized = false;
 var r;
+
 function refreshRoadElevations() {
 	// Iterate through roads and chew them
 	roadFeatures = map.queryRenderedFeatures({
@@ -196,20 +204,27 @@ function refreshRoadElevations() {
 	});
 	chewedFeatures = [];
 	// console.log(roadFeatures);
+	var contourMultiPoly = turf.multiPolygon(contourFeatures);
 	r = roadFeatures[0];
 	if (roadFeatures.length) {
 		for (var i = 0; i < roadFeatures.length; i++) {
-			var feature = roadFeatures[i];
-			var lnglat = turf.center(feature).geometry;
-			//var lnglat = feature.geometry.coordinates[0][0]; // just use an arbitrary end of the road segment. TODO: make smarter
-			// console.log('lnglat = ' + lnglat);
-			var ele = getElevationAtLngLat(lnglat);
-			if (feature.id) {
-				map.setFeatureState(feature,{'ele': ele});
-			} else {
-				// console.log('no feature id for this road');
+			var subroads = turf.lineChunk(roadFeatures[i], 0.05); // 50 meter chunks
+			// var subroads = turf.lineSplit(roadFeatures[i], contourMultiPoly);
+			for (var j = 0; j < subroads.length; j++) {
+				var subroad = subroads[j];			
+				var lnglat = turf.center(subroad).geometry;
+				var ele = getElevationAtLngLat(lnglat); // TODO: reuse contours for efficiency
+				if (feature.id) {
+					map.setFeatureState(feature,{'ele': ele});
+				} else {
+					// console.log('no feature id for this road');
+				}
 			}
-			chewedFeatures.push(feature); // TODO: check for dupes?
+			for (var j = 0; j < subroads.features.length; j++) {
+				subroads.features[j].properties = roadFeatures[i].properties;
+				chewedFeatures.push(subroads.features[j]);
+			}
+			// chewedFeatures.push(...(subroads.features));
 		}
 	}
 	
@@ -238,22 +253,18 @@ function refreshRoadElevations() {
 	
 }
 
+var contourFeatures;
 function refreshContourDisplay() {
 
-	//Calculate min and max elevation from the contours in the viewport:
-
-	var features = map.queryRenderedFeatures({
-		layers: ['contour']
-	});
 	// console.log(features)
 
 	// TODO: Find a way to filter out contours that aren't actually in the viewport 
 	
-	if (features.length) {
+	if (contourFeatures.length) {
 		var min = Number.MAX_SAFE_INTEGER;
 		var max = Number.MIN_SAFE_INTEGER;
-		for (var i = 0; i < features.length; i++) {
-			var ele = features[i].properties.ele;
+		for (var i = 0; i < contourFeatures.length; i++) {
+			var ele = contourFeatures[i].properties.ele;
 			if (ele < min)
 				min = ele;
 			if (ele > max)
@@ -391,8 +402,7 @@ function paintContours(min, max) {
 		map.setPaintProperty('contour-label', 'text-color', labelColorProperty);
 		map.setPaintProperty('contour-label', 'text-halo-color', haloColorProperty);
 		map.setPaintProperty('road-simple copy', 'line-opacity', 0);
-		map.setPaintProperty('bridge-simple', 'line-opacity', 0);
-		
+		map.setPaintProperty('bridge-simple', 'line-opacity', 0);		
 		map.setPaintProperty('bite-size-roads', 'line-color', roadColorProperty);
 	}
 }
@@ -401,7 +411,9 @@ map.on('load', function() {
 		var layer = toggleableLayers[i];
 		var mapboxLayerNames = layer.id.split(';');
 		for (var j = 0; j < mapboxLayerNames.length; j++) {
-			map.setLayoutProperty(mapboxLayerNames[j], 'visibility', layer.default ? 'visible' : 'none');
+			if (map.getLayer(mapboxLayerNames[j])) {
+				map.setLayoutProperty(mapboxLayerNames[j], 'visibility', layer.default ? 'visible' : 'none');
+			}
 		}
 	}
 	if (urlLoadedWithHash) {
