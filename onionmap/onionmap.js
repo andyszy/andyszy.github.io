@@ -125,7 +125,7 @@ for (var i = 0; i < toggleableLayers.length; i++) {
 
 // Pct should be a value between [0.0,1.0] representing normalized elevation
 function getColorFromRamp(pct, lDelta) {
-	var h = 45 + Math.pow(pct, 2.5) * (-22); // red shift comes only at the extreme elevations
+	var h = 45 + Math.pow(pct, 2) * (-16); // red shift comes only at the extreme elevations
 	var s = 68 + pct * 9;
 	var l = 85 + pct * (-20);
 	if (lDelta) {
