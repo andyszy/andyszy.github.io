@@ -49,51 +49,9 @@ function getElevationAtLngLat(lnglat) {
 	return highestElevation;
 }
 
-function getElevationLocal(e) {
-	var allFeatures = map.queryRenderedFeatures(e.point, {
-		layers: ['contour']
-	});
-   var elevations = [];
-   // For each returned feature, add elevation data to the elevations array
-   for (i = 0; i < allFeatures.length; i++) {
-     elevations.push(allFeatures[i].properties.ele);
-   }
-   console.log(elevations);
-   // In the elevations array, find the largest value
-   var highestElevation = Math.max(...elevations);
-   console.log(highestElevation);
-}
-function getElevationAJAX() {
-  // Construct the API request
-	
-  var query = 'https://api.mapbox.com/v4/mapbox.mapbox-terrain-v2/tilequery/' + clickLng + ',' + clickLat + '.json?layers=contour&limit=50&access_token=' + mapboxgl.accessToken;
-  $.ajax({
-    method: 'GET',
-    url: query,
-  }).done(function(data) {
-    // Get all the returned features
-    var allFeatures = data.features;
-    console.log(allFeatures);
-    // Create an empty array to add elevation data to
-    var elevations = [];
-    // For each returned feature, add elevation data to the elevations array
-    for (i = 0; i < allFeatures.length; i++) {
-      elevations.push(allFeatures[i].properties.ele);
-    }
-    console.log(elevations);
-    // In the elevations array, find the largest value
-    var highestElevation = Math.max(...elevations);
-    console.log(highestElevation);
-  });
-}
-
 var clickLng;
 var clickLat;
 map.on('click', function(e) {
-	 clickLng = e.lngLat.lng;
-	 clickLat = e.lngLat.lat;
-	 // getElevationAJAX();
-	 getElevationLocal(e);
 	var features = map.queryRenderedFeatures(e.point, {
 		layers: peakLayerNames
 	});
@@ -207,7 +165,7 @@ var previousMin = -1;
 var previousMax = -1;
 function refreshDisplay() {
 	refreshWaterDisplay();
-	refreshRoadDisplay();
+	refreshRoadElevations();
 	refreshContourDisplay(); 
 }
 
@@ -225,23 +183,7 @@ function refreshWaterDisplay() {
 }
 
 var roadFeatures;
-function refreshRoadDisplay() {
-	// var roadLineColor = [
-	//   "step",
-	//    ["to-number",['feature-state', 'ele']],
-	//   "hsla(45, 100%, 100%, 0)",
-	//   0,
-	//   "hsl(45, 68%, 85%)",
-	//   50,
-	//   "hsl(44, 68%, 80%)",
-	//   100,
-	//   "hsl(44, 71%, 75%)",
-	//   200,
-	//   "hsl(35, 74%, 70%)",
-	//   250,
-	//   "hsl(30, 77%, 67%)"
-	// ];
-
+function refreshRoadElevations() {
 	roadFeatures = map.queryRenderedFeatures({
 		layers: ['road-simple copy', 'bridge-simple']
 	});
@@ -260,7 +202,6 @@ function refreshRoadDisplay() {
 			}
 		}
 	}
-	
 }
 
 function refreshContourDisplay() {
