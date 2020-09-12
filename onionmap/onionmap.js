@@ -186,23 +186,15 @@ function refreshWaterDisplay() {
 
 
 var roadFeatures;
+var chewedFeatures;
+var biteSizeRoadsInitialized = false;
 var r;
-
 function refreshRoadElevations() {
-	// Clean up previous bite-size roads
-	if (map.getLayer('bite-size-roads')) {
-		map.removeLayer('bite-size-roads');
-	}
-	
-	if (map.getSource('bite-size-roads')) {
-		map.removeSource('bite-size-roads');
-	}
-
 	// Iterate through roads and chew them
-	var chewedFeatures = []; // TODO: fill in
 	roadFeatures = map.queryRenderedFeatures({
 		layers: ['road-simple copy', 'bridge-simple']
 	});
+	chewedFeatures = [];
 	// console.log(roadFeatures);
 	r = roadFeatures[0];
 	if (roadFeatures.length) {
@@ -217,9 +209,9 @@ function refreshRoadElevations() {
 				// map.setFeatureState(feature,{'too-long': ele});
 				// feature.geometry.coordinates = [];
 			} else {
-				console.log('no feature id for this road'); // TODO: import this layer in code so I can set generateID:true
+				console.log('no feature id for this road');
 			}
-			chewedFeatures.push(feature);
+			chewedFeatures.push(feature); // TODO: check for dupes?
 		}
 	}
 	
@@ -227,19 +219,25 @@ function refreshRoadElevations() {
 		"type": "FeatureCollection",
 		"features": chewedFeatures
 	};
-
-	// Add them back to the map
-	map.addSource('bite-size-roads', { type: 'geojson', data: biteSizeRoadData, generateId: true });
-	map.addLayer({
-		'id': 'bite-size-roads',
-		'type': 'line',
-		'source': 'bite-size-roads',
-		'paint': {
-			'line-width': ROADS_LINE_WIDTH,
-			'line-opacity': ROADS_LINE_OPACITY,
-			'line-color': ROADS_LINE_COLOR
-		}
-	}, 'road-simple');
+	
+	// Add them back to the map, if not already there
+	if (!biteSizeRoadsInitialized) {
+		map.addSource('bite-size-roads', { type: 'geojson', data: biteSizeRoadData, generateId: true });
+		map.addLayer({
+			'id': 'bite-size-roads',
+			'type': 'line',
+			'source': 'bite-size-roads',
+			'paint': {
+				'line-width': ROADS_LINE_WIDTH,
+				'line-opacity': ROADS_LINE_OPACITY,
+				'line-color': ROADS_LINE_COLOR
+			}
+		}, 'road-simple');
+		biteSizeRoadsInitialized = true;
+	} else {
+		map.getSource('bite-size-roads').setData(biteSizeRoadData);
+	}
+	
 }
 
 function refreshContourDisplay() {
