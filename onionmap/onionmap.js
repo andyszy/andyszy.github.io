@@ -33,8 +33,67 @@ var streetLayerNames = ['road-simple copy', 'road-label-simple', 'bridge-simple'
 var pathLayerNames = ['paths-highlighted', 'steps-highlighted', 'Paths and Steps Label']; 
 var poiLayerNames = ['poi-label', 'airport-label']; 
 
-map.on('click', function(e) {
+function getElevationAtLngLat(lnglat) {
+	var point = map.project(lnglat.coordinates);
+	var allFeatures = map.queryRenderedFeatures(point, {
+		layers: ['contour']
+	});
+   var elevations = [];
+   // For each returned feature, add elevation data to the elevations array
+   for (i = 0; i < allFeatures.length; i++) {
+     elevations.push(allFeatures[i].properties.ele);
+   }
+   // console.log(elevations);
+   // In the elevations array, find the largest value
+   var highestElevation = Math.max(...elevations);
+	return highestElevation;
+}
 
+function getElevationLocal(e) {
+	var allFeatures = map.queryRenderedFeatures(e.point, {
+		layers: ['contour']
+	});
+   var elevations = [];
+   // For each returned feature, add elevation data to the elevations array
+   for (i = 0; i < allFeatures.length; i++) {
+     elevations.push(allFeatures[i].properties.ele);
+   }
+   console.log(elevations);
+   // In the elevations array, find the largest value
+   var highestElevation = Math.max(...elevations);
+   console.log(highestElevation);
+}
+function getElevationAJAX() {
+  // Construct the API request
+	
+  var query = 'https://api.mapbox.com/v4/mapbox.mapbox-terrain-v2/tilequery/' + clickLng + ',' + clickLat + '.json?layers=contour&limit=50&access_token=' + mapboxgl.accessToken;
+  $.ajax({
+    method: 'GET',
+    url: query,
+  }).done(function(data) {
+    // Get all the returned features
+    var allFeatures = data.features;
+    console.log(allFeatures);
+    // Create an empty array to add elevation data to
+    var elevations = [];
+    // For each returned feature, add elevation data to the elevations array
+    for (i = 0; i < allFeatures.length; i++) {
+      elevations.push(allFeatures[i].properties.ele);
+    }
+    console.log(elevations);
+    // In the elevations array, find the largest value
+    var highestElevation = Math.max(...elevations);
+    console.log(highestElevation);
+  });
+}
+
+var clickLng;
+var clickLat;
+map.on('click', function(e) {
+	 clickLng = e.lngLat.lng;
+	 clickLat = e.lngLat.lat;
+	 // getElevationAJAX();
+	 getElevationLocal(e);
 	var features = map.queryRenderedFeatures(e.point, {
 		layers: peakLayerNames
 	});
@@ -121,7 +180,17 @@ for (var i = 0; i < toggleableLayers.length; i++) {
 	layers.appendChild(checkboxDiv);
 }
 
-
+function getRoadColor(pct) {
+	var h = 45 + Math.pow(pct, 2) * (-16); // red shift comes only at the extreme elevations
+	var s = 68 + pct * 9;
+	var l = 85 + pct * (-20);
+	var lDelta = +5; /* no more than 15, otherwise clamping happens */
+	if (lDelta) {
+		l = Math.min(100,Math.max(0, l + lDelta));
+	}
+	var a= "100%";
+	return "hsla(" + Number(h).toFixed(0) + ", " + Number(s).toFixed(0) + "%, " + Number(l).toFixed(0) + "%, " + a + ")";
+}
 
 // Pct should be a value between [0.0,1.0] representing normalized elevation
 function getColorFromRamp(pct, lDelta) {
@@ -136,6 +205,64 @@ function getColorFromRamp(pct, lDelta) {
 
 var previousMin = -1;
 var previousMax = -1;
+function refreshDisplay() {
+	refreshWaterDisplay();
+	refreshRoadDisplay();
+	refreshContourDisplay(); 
+}
+
+var waterFeatures;
+function refreshWaterDisplay() {
+	waterFeatures = map.queryRenderedFeatures({
+		layers: ['water']
+	});
+	if (waterFeatures.length) {
+		for (var i = 0; i < waterFeatures.length; i++) {
+			var feature = waterFeatures[i];
+			// console.log(feature);
+		}
+	}
+}
+
+var roadFeatures;
+function refreshRoadDisplay() {
+	// var roadLineColor = [
+	//   "step",
+	//    ["to-number",['feature-state', 'ele']],
+	//   "hsla(45, 100%, 100%, 0)",
+	//   0,
+	//   "hsl(45, 68%, 85%)",
+	//   50,
+	//   "hsl(44, 68%, 80%)",
+	//   100,
+	//   "hsl(44, 71%, 75%)",
+	//   200,
+	//   "hsl(35, 74%, 70%)",
+	//   250,
+	//   "hsl(30, 77%, 67%)"
+	// ];
+
+	roadFeatures = map.queryRenderedFeatures({
+		layers: ['road-simple copy', 'bridge-simple']
+	});
+	console.log(roadFeatures);
+	if (roadFeatures.length) {
+		for (var i = 0; i < roadFeatures.length; i++) {
+			var feature = roadFeatures[i];
+			var lnglat = turf.center(feature).geometry;
+			//var lnglat = feature.geometry.coordinates[0][0]; // just use an arbitrary end of the road segment. TODO: make smarter
+			// console.log('lnglat = ' + lnglat);
+			var ele = getElevationAtLngLat(lnglat);
+			if (feature.id) {
+				map.setFeatureState(feature,{'ele': ele});
+			} else {
+				console.log('no feature id for this road');
+			}
+		}
+	}
+	
+}
+
 function refreshContourDisplay() {
 
 	//Calculate min and max elevation from the contours in the viewport:
@@ -247,7 +374,9 @@ function paintContours(min, max) {
 	var haloColorProperty = ["step", ["get", "ele"],
 		"hsl(45, 100%, 100%)" /* rest of mapbox property to be filled in below */
 	]; 
-	
+	var roadColorProperty = ["step", ["to-number",['feature-state', 'ele']],
+		"hsla(45, 100%, 100%, 15%)" /* rest of mapbox property to be filled in below */
+	]; 
 	for (var i = 0; i < numSteps; i++) {
 		colorElements[i].style.display = 'none';
 	}
@@ -264,13 +393,15 @@ function paintContours(min, max) {
 		var ele = elevationSteps[i];
 		var fillColor = getColorFromRamp(i / (elevationSteps.length-1));
 		var lineColor = getColorFromRamp((i+1) / (elevationSteps.length-1)); // Contour line uses the color from the next elevation up
-		var labelColor = getColorFromRamp((i+1) / (elevationSteps.length-1), -10);
+		var labelColor = getColorFromRamp((i) / (elevationSteps.length-1), -20);
 		var haloColor = getColorFromRamp((i+1) / (elevationSteps.length-1), +20);
-	
+		var roadColor = getRoadColor((i) / (elevationSteps.length-1));	
+		
 		fillColorProperty.push(ele, fillColor);
 		lineColorProperty.push(ele, lineColor);
 		labelColorProperty.push(ele, labelColor);
 		haloColorProperty.push(ele, haloColor);
+		roadColorProperty.push(ele, roadColor);
 
 		colorElements[i].style.backgroundColor = fillColor;
 		var eleForDisplay = ele - (ele % displayIncrement); // round this down to the nearest multiple of the allowable increment
@@ -284,6 +415,8 @@ function paintContours(min, max) {
 		map.setPaintProperty('contour lines', 'line-color', lineColorProperty);
 		map.setPaintProperty('contour-label', 'text-color', labelColorProperty);
 		map.setPaintProperty('contour-label', 'text-halo-color', haloColorProperty);
+		map.setPaintProperty('road-simple copy', 'line-color', roadColorProperty);
+		map.setPaintProperty('bridge-simple', 'line-color', roadColorProperty);
 	}
 }
 map.on('load', function() {
@@ -300,19 +433,20 @@ map.on('load', function() {
 		// Request location permission and go to the user's current location
 		geolocateControl.trigger(); 
 	}
-	refreshContourDisplay();
+	refreshDisplay();
 });
 
 map.on('sourcedata', (e) => {
+	// console.log("sourcedata");
 	if (map.loaded()) {
-		refreshContourDisplay();
-		map.off('sourcedata');
+		refreshDisplay();
+		// map.off('sourcedata');
 	}
 });
 
 
 map.on('moveend', function() { // Could also do on "move" but it'd be less performant
-	refreshContourDisplay();
+	refreshDisplay();
 });
 
 $('#legendIcon').click(function() {
