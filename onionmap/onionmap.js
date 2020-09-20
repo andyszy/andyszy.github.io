@@ -226,6 +226,11 @@ function initRoadsLayer() {
 // TODO: for efficiency, don't chew all roads on every refresh, only the ones that are new?
 
 function pointWithinMapBounds(feature) {
+	var center = turf.center(feature);
+	if (map.getBounds().contains(center.geometry.coordinates)) {
+		return center.geometry.coordinates;
+	}
+	
 	var coords = feature.geometry.coordinates;
 	for (var i = 0; i < coords.length; i++) {
 		if (map.getBounds().contains(coords[i])) {
