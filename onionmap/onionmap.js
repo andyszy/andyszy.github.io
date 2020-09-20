@@ -259,7 +259,7 @@ function refreshContourDisplay() {
 
 	// console.log(features)
 
-	// TODO: Find a way to filter out contours that aren't actually in the viewport 
+	// TODO: Find a way to filter out contours that aren't actually visible in the viewport. This is challenging because some contours are within the viewport but entirely occluded by higher-elevation contours. These should be ignored for purposes of coloring
 	
 	if (contourFeatures.length) {
 		var min = Number.MAX_SAFE_INTEGER;
