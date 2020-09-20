@@ -244,11 +244,23 @@ function chewRoads() {
 	roadFeatures = map.queryRenderedFeatures({
 		layers: ['road-simple copy', 'bridge-simple']
 	});
+
+	var northSideOfMap = {
+		'type': 'Feature',
+		'geometry': {
+		'type': 'LineString',
+		'coordinates': [map.getBounds().getNorthWest().toArray(), map.getBounds().getNorthEast().toArray()]
+		}
+	};
+	var widthOfMap = turf.length(northSideOfMap);  // in km
+	var chunkLength = widthOfMap / 100;
+	// console.log('chunkLength = ' + chunkLength);
+	
 	biteSizeRoadData.features = [];
 	r = roadFeatures[0]; // FOR DEBUGGING ONLY
 	if (roadFeatures.length) {
 		for (var i = 0; i < roadFeatures.length; i++) {
-			var subroads = turf.lineChunk(roadFeatures[i], 0.02); // 50 meter chunks. TODO: should be dynamic based on zoom level, for efficiency
+			var subroads = turf.lineChunk(roadFeatures[i], chunkLength);
 			for (var j = 0; j < subroads.features.length; j++) {
 				subroads.features[j].properties = $.extend({}, roadFeatures[i].properties); // use $.extend to get a clone of the properties object
 				var lnglat = pointWithinMapBounds(subroads.features[j]);
