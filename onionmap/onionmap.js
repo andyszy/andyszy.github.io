@@ -39,6 +39,9 @@ function getElevationAtLngLat(lnglat) {
 	var allFeatures = map.queryRenderedFeatures(point, {
 		layers: ['contour']
 	});
+	if (allFeatures.length == 0) {
+		console.log("no contours found"); //DEBUG
+	}
    var elevations = [];
    // For each returned feature, add elevation data to the elevations array
    for (var i = 0; i < allFeatures.length; i++) {
