@@ -35,7 +35,7 @@ var pathLayerNames = ['paths-highlighted', 'steps-highlighted', 'Paths and Steps
 var poiLayerNames = ['poi-label', 'airport-label']; 
 
 function getElevationAtLngLat(lnglat) {
-	var point = map.project(lnglat.coordinates);
+	var point = map.project(lnglat);
 	var allFeatures = map.queryRenderedFeatures(point, {
 		layers: ['contour']
 	});
@@ -225,6 +225,16 @@ function initRoadsLayer() {
 
 // TODO: for efficiency, don't chew all roads on every refresh, only the ones that are new?
 
+function pointWithinMapBounds(feature) {
+	var coords = feature.geometry.coordinates;
+	for (var i = 0; i < coords.length; i++) {
+		if (map.getBounds().contains(coords[i])) {
+			return coords[i];
+		}
+	}
+	return null;
+}
+
 function chewRoads() {
 	roadFeatures = map.queryRenderedFeatures({
 		layers: ['road-simple copy', 'bridge-simple']
@@ -233,16 +243,21 @@ function chewRoads() {
 	r = roadFeatures[0]; // FOR DEBUGGING ONLY
 	if (roadFeatures.length) {
 		for (var i = 0; i < roadFeatures.length; i++) {
-			var subroads = turf.lineChunk(roadFeatures[i], 0.05); // 50 meter chunks. TODO: should be dynamic based on zoom level, for efficiency
+			var subroads = turf.lineChunk(roadFeatures[i], 0.1); // 50 meter chunks. TODO: should be dynamic based on zoom level, for efficiency
 			for (var j = 0; j < subroads.features.length; j++) {
 				subroads.features[j].properties = roadFeatures[i].properties;
-				var lnglat = turf.center(subroads.features[j]).geometry;
-				var ele = getElevationAtLngLat(lnglat);
-				if (ele == -Infinity) {
-					console.log(ele);
+				var lnglat = pointWithinMapBounds(subroads.features[j]);
+				if (lnglat) {
+					var ele = getElevationAtLngLat(lnglat);
+					if (ele == -Infinity) {
+						console.log(ele);
+						ele = 0;
+					}
+					subroads.features[j].properties.ele = ele;
+					biteSizeRoadData.features.push(subroads.features[j]);
+				} else {
+					// We can ignore this subroad since it's probably entirely outside the viewport
 				}
-				subroads.features[j].properties.ele = ele;
-				biteSizeRoadData.features.push(subroads.features[j]);
 			}
 		}
 	}
@@ -252,25 +267,6 @@ function chewRoads() {
 }
 var bsr;  // FOR DEBUGGING ONLY
 
-function computeRoadElevations() {
-	// Need to re-query the map for these features, so they have the correct mapbox-generated ID's attached
-	biteSizeRoadFeatures = map.queryRenderedFeatures({
-		layers: ['bite-size-roads']
-	}); // TODO: figure out why this is coming back empty :(
-	
-	console.log("biteSizeRoadFeatures.length = " + biteSizeRoadFeatures.length);
-	bsr = biteSizeRoadFeatures[0]; // FOR DEBUGGING ONLY
-	for (var i = 0; i < biteSizeRoadFeatures.length; i++) {
-		var f = biteSizeRoadFeatures[i];
-		var lnglat = turf.center(f).geometry;
-		var ele = getElevationAtLngLat(lnglat); // TODO: reuse contours for efficiency
-
-		map.setFeatureState(
-		{ source: 'bite-size-roads', id: f.id },
-		{ ele: ele }
-		);
-	}
-}
 
 var contourFeatures;
 function refreshContourDisplay() {
