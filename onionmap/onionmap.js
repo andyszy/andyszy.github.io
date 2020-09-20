@@ -39,15 +39,12 @@ function getElevationAtLngLat(lnglat) {
 	var allFeatures = map.queryRenderedFeatures(point, {
 		layers: ['contour']
 	});
-	if (allFeatures.length == 0) {
-		console.log("no contours found"); //DEBUG
-	}
    var elevations = [];
    // For each returned feature, add elevation data to the elevations array
    for (var i = 0; i < allFeatures.length; i++) {
      elevations.push(allFeatures[i].properties.ele);
    }
-   // console.log(elevations);
+
    // In the elevations array, find the largest value
    var highestElevation = Math.max(...elevations);
 	return highestElevation;
@@ -170,7 +167,6 @@ var previousMin = -1;
 var previousMax = -1;
 function refreshDisplay() {
 
-	console.log("refreshDisplay()"); // DEBUG
 	//Calculate min and max elevation from the contours in the viewport:
 
 	contourFeatures = map.queryRenderedFeatures({
@@ -190,7 +186,6 @@ function refreshWaterDisplay() {
 	if (waterFeatures.length) {
 		for (var i = 0; i < waterFeatures.length; i++) {
 			var feature = waterFeatures[i];
-			// console.log(feature);
 		}
 	}
 }
@@ -198,7 +193,6 @@ function refreshWaterDisplay() {
 
 
 var roadFeatures;
-var r;  // FOR DEBUGGING ONLY
 
 var biteSizeRoadData = {
 	"type": "FeatureCollection",
@@ -254,10 +248,8 @@ function chewRoads() {
 	};
 	var widthOfMap = turf.length(northSideOfMap);  // in km
 	var chunkLength = widthOfMap / 100;
-	// console.log('chunkLength = ' + chunkLength);
 	
 	biteSizeRoadData.features = [];
-	r = roadFeatures[0]; // FOR DEBUGGING ONLY
 	if (roadFeatures.length) {
 		for (var i = 0; i < roadFeatures.length; i++) {
 			var subroads = turf.lineChunk(roadFeatures[i], chunkLength);
@@ -278,18 +270,11 @@ function chewRoads() {
 			}
 		}
 	}
-
 	map.getSource('bite-size-roads').setData(biteSizeRoadData);
-
 }
-var bsr;  // FOR DEBUGGING ONLY
-
 
 var contourFeatures;
 function refreshContourDisplay() {
-
-	// console.log(features)
-
 	// TODO: Find a way to filter out contours that aren't actually visible in the viewport. This is challenging because some contours are within the viewport but entirely occluded by higher-elevation contours. These should be ignored for purposes of coloring
 	
 	if (contourFeatures.length) {
@@ -367,7 +352,6 @@ function paintContours(min, max) {
 	if (logmin < 0 || isNaN(logmin)) 
 		logmin = 0;
 	
-	// console.log('{' + logmin + ','+ logmax +'}')
 	for (var i = logmin; i < logmax; i += logincrement) {
 		var ele = displayIncrement*Math.ceil(10**i);
 		if (elevationSteps[elevationSteps.length - 1] == ele) {
@@ -376,9 +360,6 @@ function paintContours(min, max) {
 			elevationSteps.push(ele);
 		}
 	}
-
-	// elevationSteps = [0, 50, 100, 200, 250];
-	// console.log(elevationSteps);
 
 	var fillColorProperty = ["step", ["get", "ele"],
 		"hsla(45, 100%, 100%,0%)" /* rest of mapbox property to be filled in below */
