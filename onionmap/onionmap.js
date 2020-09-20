@@ -174,7 +174,7 @@ function refreshDisplay() {
 	});
 	
 	refreshWaterDisplay();
-	refreshRoadElevations();
+	refreshRoads();
 	refreshContourDisplay(); 
 }
 
@@ -194,7 +194,7 @@ function refreshWaterDisplay() {
 
 
 var roadFeatures;
-var r;
+var r;  // FOR DEBUGGING ONLY
 
 var biteSizeRoadData = {
 	"type": "FeatureCollection",
@@ -219,39 +219,50 @@ function initRoadsLayer() {
 	}, 'road-simple copy');
 }
 
-function refreshRoadElevations() {
+function refreshRoads() {
+	chewRoads();
+	computeRoadElevations();
+}
+
+function chewRoads() {
 	roadFeatures = map.queryRenderedFeatures({
 		layers: ['road-simple copy', 'bridge-simple']
 	});
-	
-	// Iterate through roads and chew them
-	r = roadFeatures[0];
+	biteSizeRoadData.features = [];
+	r = roadFeatures[0]; // FOR DEBUGGING ONLY
 	if (roadFeatures.length) {
 		for (var i = 0; i < roadFeatures.length; i++) {
 			var subroads = turf.lineChunk(roadFeatures[i], 0.05); // 50 meter chunks
-			for (var j = 0; j < subroads.length; j++) {
-				var subroad = subroads[j];			
-				if (feature.id) {
-					map.setFeatureState(subroad,{'ele': ele});
-				}
-			}
 			for (var j = 0; j < subroads.features.length; j++) {
-				var newId = roadFeatures[i].id + '_j';
 				subroads.features[j].properties = roadFeatures[i].properties;
-				subroads.features[j].id = newId;
 				biteSizeRoadData.features.push(subroads.features[j]);
-				var lnglat = turf.center(subroads.features[j]).geometry;
-				var ele = getElevationAtLngLat(lnglat); // TODO: reuse contours for efficiency
-				
-				map.setFeatureState(
-				{ source: 'bite-size-roads', id: newId },
-				{ ele: ele }
-				);
 			}
 		}
 	}
 
 	map.getSource('bite-size-roads').setData(biteSizeRoadData);
+
+}
+var bsr;  // FOR DEBUGGING ONLY
+
+function computeRoadElevations() {
+	// Need to re-query the map for these features, so they have the correct mapbox-generated ID's attached
+	biteSizeRoadFeatures = map.queryRenderedFeatures({
+		layers: ['bite-size-roads']
+	}); // TODO: figure out why this is coming back empty :(
+	
+	console.log("biteSizeRoadFeatures.length = " + biteSizeRoadFeatures.length);
+	bsr = biteSizeRoadFeatures[0]; // FOR DEBUGGING ONLY
+	for (var i = 0; i < biteSizeRoadFeatures.length; i++) {
+		var f = biteSizeRoadFeatures[i];
+		var lnglat = turf.center(f).geometry;
+		var ele = getElevationAtLngLat(lnglat); // TODO: reuse contours for efficiency
+
+		map.setFeatureState(
+		{ source: 'bite-size-roads', id: f.id },
+		{ ele: ele }
+		);
+	}
 }
 
 var contourFeatures;
@@ -362,7 +373,7 @@ function paintContours(min, max) {
 		"hsl(45, 100%, 100%)" /* rest of mapbox property to be filled in below */
 	]; 
 	var roadColorProperty = ["step", ["to-number",['feature-state', 'ele']],
-		"hsla(45, 100%, 100%, 15%)" /* rest of mapbox property to be filled in below */
+		"hsla(45, 100%, 100%, 100%)" /* rest of mapbox property to be filled in below */
 	]; 
 	for (var i = 0; i < numSteps; i++) {
 		colorElements[i].style.display = 'none';
