@@ -147,8 +147,9 @@ function getRoadColor(pct) {
 	if (lDelta) {
 		l = Math.min(100,Math.max(0, l + lDelta));
 	}
-	var a= "100%";
-	return "hsla(" + Number(h).toFixed(0) + ", " + Number(s).toFixed(0) + "%, " + Number(l).toFixed(0) + "%, " + a + ")";
+	var a = "1";
+	var roadColor = "hsla(" + Number(h).toFixed(0) + ", " + Number(s).toFixed(0) + "%, " + Number(l).toFixed(0) + "%, " + a + ")";
+	return roadColor;
 }
 
 // Pct should be a value between [0.0,1.0] representing normalized elevation
@@ -198,44 +199,20 @@ var biteSizeRoadsInitialized = false;
 var r;
 
 function refreshRoadElevations() {
-	// Iterate through roads and chew them
-	roadFeatures = map.queryRenderedFeatures({
-		layers: ['road-simple copy', 'bridge-simple']
-	});
+	
 	chewedFeatures = [];
-	// console.log(roadFeatures);
-	var contourMultiPoly = turf.multiPolygon(contourFeatures);
-	r = roadFeatures[0];
-	if (roadFeatures.length) {
-		for (var i = 0; i < roadFeatures.length; i++) {
-			var subroads = turf.lineChunk(roadFeatures[i], 0.05); // 50 meter chunks
-			// var subroads = turf.lineSplit(roadFeatures[i], contourMultiPoly);
-			for (var j = 0; j < subroads.length; j++) {
-				var subroad = subroads[j];			
-				var lnglat = turf.center(subroad).geometry;
-				var ele = getElevationAtLngLat(lnglat); // TODO: reuse contours for efficiency
-				if (feature.id) {
-					map.setFeatureState(feature,{'ele': ele});
-				} else {
-					// console.log('no feature id for this road');
-				}
-			}
-			for (var j = 0; j < subroads.features.length; j++) {
-				subroads.features[j].properties = roadFeatures[i].properties;
-				chewedFeatures.push(subroads.features[j]);
-			}
-			// chewedFeatures.push(...(subroads.features));
-		}
-	}
 	
 	var biteSizeRoadData = {
 		"type": "FeatureCollection",
 		"features": chewedFeatures
 	};
 	
-	// Add them back to the map, if not already there
-	if (!biteSizeRoadsInitialized) {
-		map.addSource('bite-size-roads', { type: 'geojson', data: biteSizeRoadData, generateId: true });
+	if (!biteSizeRoadsInitialized) {	
+		map.addSource('bite-size-roads', { 
+			type: 'geojson',
+			generateId: true,
+			data: biteSizeRoadData 
+		});
 		map.addLayer({
 			'id': 'bite-size-roads',
 			'type': 'line',
@@ -247,9 +224,50 @@ function refreshRoadElevations() {
 			}
 		}, 'road-simple copy');
 		biteSizeRoadsInitialized = true;
-	} else {
-		map.getSource('bite-size-roads').setData(biteSizeRoadData);
 	}
+	
+	roadFeatures = map.queryRenderedFeatures({
+		layers: ['road-simple copy', 'bridge-simple']
+	});
+	
+	// Iterate through roads and chew them
+	
+	// console.log(roadFeatures);
+	// var contourMultiPoly = turf.multiPolygon(contourFeatures);
+	r = roadFeatures[0];
+	if (roadFeatures.length) {
+		for (var i = 0; i < roadFeatures.length; i++) {
+			var subroads = turf.lineChunk(roadFeatures[i], 0.05); // 50 meter chunks
+			// var subroads = turf.lineSplit(roadFeatures[i], contourMultiPoly);
+			for (var j = 0; j < subroads.length; j++) {
+				var subroad = subroads[j];			
+				if (feature.id) {
+					map.setFeatureState(subroad,{'ele': ele});
+				} else {
+					// console.log('no feature id for this road');
+				}
+			}
+			for (var j = 0; j < subroads.features.length; j++) {
+				var newId = roadFeatures[i].id + '_j';
+				subroads.features[j].properties = roadFeatures[i].properties;
+				subroads.features[j].id = newId;
+				chewedFeatures.push(subroads.features[j]);
+				var lnglat = turf.center(subroads.features[j]).geometry;
+				var ele = getElevationAtLngLat(lnglat); // TODO: reuse contours for efficiency
+				
+				map.setFeatureState(
+				{ source: 'bite-size-roads', id: newId },
+				{ ele: ele }
+				);
+
+				
+			}
+			// chewedFeatures.push(...(subroads.features));
+		}
+	}
+
+	biteSizeRoadData.data = chewedFeatures;
+	map.getSource('bite-size-roads').setData(biteSizeRoadData);
 	
 }
 
@@ -532,4 +550,4 @@ var ROADS_LINE_OPACITY = [
 	1
 ];
 
-var ROADS_LINE_COLOR = "hsla(232, 2%, 100%, 0.15)";
+var ROADS_LINE_COLOR = "hsla(232, 2%, 100%, 0)";
