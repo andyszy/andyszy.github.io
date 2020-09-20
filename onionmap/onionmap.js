@@ -194,35 +194,32 @@ function refreshWaterDisplay() {
 
 
 var roadFeatures;
-var biteSizeRoadsInitialized = false;
 var r;
 
+var biteSizeRoadData = {
+	"type": "FeatureCollection",
+	"features": []
+};
+
+function initRoadsLayer() {
+	map.addSource('bite-size-roads', { 
+		type: 'geojson',
+		generateId: true,
+		data: biteSizeRoadData 
+	});
+	map.addLayer({
+		'id': 'bite-size-roads',
+		'type': 'line',
+		'source': 'bite-size-roads',
+		'paint': {
+			'line-width': ROADS_LINE_WIDTH,
+			'line-opacity': ROADS_LINE_OPACITY,
+			'line-color': ROADS_LINE_COLOR
+		}
+	}, 'road-simple copy');
+}
+
 function refreshRoadElevations() {
-	
-	var biteSizeRoadData = {
-		"type": "FeatureCollection",
-		"features": []
-	};
-	
-	if (!biteSizeRoadsInitialized) {	
-		map.addSource('bite-size-roads', { 
-			type: 'geojson',
-			generateId: true,
-			data: biteSizeRoadData 
-		});
-		map.addLayer({
-			'id': 'bite-size-roads',
-			'type': 'line',
-			'source': 'bite-size-roads',
-			'paint': {
-				'line-width': ROADS_LINE_WIDTH,
-				'line-opacity': ROADS_LINE_OPACITY,
-				'line-color': ROADS_LINE_COLOR
-			}
-		}, 'road-simple copy');
-		biteSizeRoadsInitialized = true;
-	}
-	
 	roadFeatures = map.queryRenderedFeatures({
 		layers: ['road-simple copy', 'bridge-simple']
 	});
@@ -255,7 +252,6 @@ function refreshRoadElevations() {
 	}
 
 	map.getSource('bite-size-roads').setData(biteSizeRoadData);
-	
 }
 
 var contourFeatures;
@@ -412,6 +408,8 @@ function paintContours(min, max) {
 	}
 }
 map.on('load', function() {
+	initRoadsLayer();
+	
 	for (var i = 0; i < toggleableLayers.length; i++) {
 		var layer = toggleableLayers[i];
 		var mapboxLayerNames = layer.id.split(';');
