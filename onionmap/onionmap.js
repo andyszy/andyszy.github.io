@@ -220,6 +220,8 @@ function initRoadsLayer() {
 	}, 'road-simple copy');
 }
 
+// TODO: for efficiency, don't chew all roads on every refresh, only the ones that are new?
+
 function chewRoads() {
 	roadFeatures = map.queryRenderedFeatures({
 		layers: ['road-simple copy', 'bridge-simple']
@@ -228,7 +230,7 @@ function chewRoads() {
 	r = roadFeatures[0]; // FOR DEBUGGING ONLY
 	if (roadFeatures.length) {
 		for (var i = 0; i < roadFeatures.length; i++) {
-			var subroads = turf.lineChunk(roadFeatures[i], 0.05); // 50 meter chunks
+			var subroads = turf.lineChunk(roadFeatures[i], 0.05); // 50 meter chunks. TODO: should be dynamic based on zoom level, for efficiency
 			for (var j = 0; j < subroads.features.length; j++) {
 				subroads.features[j].properties = roadFeatures[i].properties;
 				var lnglat = turf.center(subroads.features[j]).geometry;
