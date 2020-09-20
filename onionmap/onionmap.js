@@ -243,9 +243,9 @@ function chewRoads() {
 	r = roadFeatures[0]; // FOR DEBUGGING ONLY
 	if (roadFeatures.length) {
 		for (var i = 0; i < roadFeatures.length; i++) {
-			var subroads = turf.lineChunk(roadFeatures[i], 0.1); // 50 meter chunks. TODO: should be dynamic based on zoom level, for efficiency
+			var subroads = turf.lineChunk(roadFeatures[i], 0.02); // 50 meter chunks. TODO: should be dynamic based on zoom level, for efficiency
 			for (var j = 0; j < subroads.features.length; j++) {
-				subroads.features[j].properties = roadFeatures[i].properties;
+				subroads.features[j].properties = $.extend({}, roadFeatures[i].properties); // use $.extend to get a clone of the properties object
 				var lnglat = pointWithinMapBounds(subroads.features[j]);
 				if (lnglat) {
 					var ele = getElevationAtLngLat(lnglat);
@@ -376,7 +376,7 @@ function paintContours(min, max) {
 		"hsl(45, 100%, 100%)" /* rest of mapbox property to be filled in below */
 	]; 
 	var roadColorProperty = ["step", ["get", "ele"],
-		"hsla(45, 100%, 100%, 100%)" /* rest of mapbox property to be filled in below */
+		getRoadColor(0) /* rest of mapbox property to be filled in below */
 	]; 
 	for (var i = 0; i < numSteps; i++) {
 		colorElements[i].style.display = 'none';
