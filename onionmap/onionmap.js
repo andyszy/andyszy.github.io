@@ -167,6 +167,7 @@ var previousMin = -1;
 var previousMax = -1;
 function refreshDisplay() {
 
+	console.log("refreshDisplay()"); // DEBUG
 	//Calculate min and max elevation from the contours in the viewport:
 
 	contourFeatures = map.queryRenderedFeatures({
@@ -174,7 +175,7 @@ function refreshDisplay() {
 	});
 	
 	refreshWaterDisplay();
-	refreshRoads();
+	chewRoads();
 	refreshContourDisplay(); 
 }
 
@@ -219,11 +220,6 @@ function initRoadsLayer() {
 	}, 'road-simple copy');
 }
 
-function refreshRoads() {
-	chewRoads();
-	computeRoadElevations();
-}
-
 function chewRoads() {
 	roadFeatures = map.queryRenderedFeatures({
 		layers: ['road-simple copy', 'bridge-simple']
@@ -235,6 +231,12 @@ function chewRoads() {
 			var subroads = turf.lineChunk(roadFeatures[i], 0.05); // 50 meter chunks
 			for (var j = 0; j < subroads.features.length; j++) {
 				subroads.features[j].properties = roadFeatures[i].properties;
+				var lnglat = turf.center(subroads.features[j]).geometry;
+				var ele = getElevationAtLngLat(lnglat);
+				if (ele == -Infinity) {
+					console.log(ele);
+				}
+				subroads.features[j].properties.ele = ele;
 				biteSizeRoadData.features.push(subroads.features[j]);
 			}
 		}
@@ -372,7 +374,7 @@ function paintContours(min, max) {
 	var haloColorProperty = ["step", ["get", "ele"],
 		"hsl(45, 100%, 100%)" /* rest of mapbox property to be filled in below */
 	]; 
-	var roadColorProperty = ["step", ["to-number",['feature-state', 'ele']],
+	var roadColorProperty = ["step", ["get", "ele"],
 		"hsla(45, 100%, 100%, 100%)" /* rest of mapbox property to be filled in below */
 	]; 
 	for (var i = 0; i < numSteps; i++) {
@@ -437,14 +439,6 @@ map.on('load', function() {
 		geolocateControl.trigger(); 
 	}
 	refreshDisplay();
-});
-
-map.on('sourcedata', (e) => {
-	// console.log("sourcedata");
-	if (map.loaded()) {
-		refreshDisplay();
-		// map.off('sourcedata');
-	}
 });
 
 
