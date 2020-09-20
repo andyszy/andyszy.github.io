@@ -41,7 +41,7 @@ function getElevationAtLngLat(lnglat) {
 	});
    var elevations = [];
    // For each returned feature, add elevation data to the elevations array
-   for (i = 0; i < allFeatures.length; i++) {
+   for (var i = 0; i < allFeatures.length; i++) {
      elevations.push(allFeatures[i].properties.ele);
    }
    // console.log(elevations);
