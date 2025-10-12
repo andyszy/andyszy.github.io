@@ -211,12 +211,7 @@
 					© <span id="year"></span>
 				</p>
 			</div><!-- /.container -->
-		</footer><!-- Bootstrap core JavaScript -->
-		<script src="vendor/jquery/jquery.min.js"></script> 
-		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> <!-- Plugin JavaScript -->
-		 
-		<script src="vendor/jquery-easing/jquery.easing.min.js"></script> <!-- Custom JavaScript for this theme -->
-		 <!-- <script src="js/scrolling-nav.js"></script> -->
+		</footer>
 		<script>
 			function toRoman(num) {
 				const romanNumerals = [
@@ -233,31 +228,7 @@
 				}
 				return result;
 			}
-
-			const yearElement = document.getElementById('year');
-			const currentYear = new Date().getFullYear();
-			let hasAnimated = false;
-
-			const observer = new IntersectionObserver((entries) => {
-				entries.forEach(entry => {
-					if (entry.isIntersecting && !hasAnimated) {
-						hasAnimated = true;
-						let year = 2000;
-						yearElement.textContent = toRoman(year);
-
-						const interval = setInterval(() => {
-							year++;
-							yearElement.textContent = toRoman(year);
-
-							if (year >= currentYear) {
-								clearInterval(interval);
-							}
-						}, 5);
-					}
-				});
-			});
-
-			observer.observe(yearElement);
+			document.getElementById('year').textContent = toRoman(new Date().getFullYear());
 		</script>
 	</body>
 </html>
