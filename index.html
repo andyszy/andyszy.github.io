@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head> <!-- force update -->
+	<head>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-NG1PWE4B8K"></script>
 		<script>
@@ -12,205 +12,224 @@
 		</script>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="">
-		<meta name="author" content="">
+		<meta name="description" content="Andy Szybalski — designer and engineer. Partner Product Design Director at Microsoft AI, co-founder of Tradewinds School and Cove, early designer of Google Street View and Uber Eats.">
+		<meta name="author" content="Andy Szybalski">
 		<title>
 			Andy Szybalski
-		</title><!-- Bootstrap core CSS -->
-		<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"><!-- Custom styles for this template -->
-		<link href="css/scrolling-nav.css" rel="stylesheet">
-		<link href="css/andy.css" rel="stylesheet">
+		</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+		<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+		<script>
+			tailwind.config = {
+				theme: { extend: { fontFamily: { serif: ["Newsreader", "ui-serif", "Georgia", "serif"] } } },
+			};
+		</script>
+		<style>
+			.prose a {
+				text-decoration: none;
+				border-bottom: 1px solid rgba(100, 116, 139, 0.35);
+			}
+			.link-hairline {
+				text-decoration: none;
+				border-bottom: 1px solid rgba(100, 116, 139, 0.35);
+			}
+			img.portrait {
+				display: block;
+				width: 132px;
+				height: 132px;
+				max-width: none;
+				border-radius: 9999px;
+				object-fit: cover;
+				object-position: center 42%;
+				margin: 0 0 1.5rem;
+			}
+			@media (min-width: 1100px) {
+				.headline-row { position: relative; }
+				img.portrait {
+					position: absolute;
+					top: 50%;
+					right: 100%;
+					margin: 0 2.25rem 0 0;
+					width: 168px;
+					height: 168px;
+					transform: translateY(-50%);
+				}
+			}
+		</style>
 	</head>
-	<body id="page-top">
-		<!-- Navigation -->
-		<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">Andy Szybalski</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#advising">Advising</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#art">Art Projects</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav> -->
-		<!--  <header class="bg-primary text-white">
-    <div class="container text-center">
-      <h1>Welcome to Scrolling Nav</h1>
-      <p class="lead">A landing page template freshly redesigned for Bootstrap 4</p>
-    </div>
-  </header> -->
-		<section id="about">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 mx-auto">
-						<img src="andy-photobooth-600.jpg" class="rounded float-right w-25 ml-4" alt="Photo of Andy">
-						<h2>
-							Hi, I'm Andy Szybalski!
-						</h2>
-						<p>
-							I'm a designer and engineer, and currently Co-founder and Chief Design Officer at <a href="http://cove.ai"><strong>Cove</strong></a>, a Sequoia-backed seed stage startup.
-						</p>
-						<p>
-							I helped create <strong>Uber Eats</strong>, where I was Sr Director of Product Design from 2014–2020, built the Eats design team from zero to 50+, and helped build the Eats business from zero to $25B in annual bookings.
-						</p>
-						<p>
-							Previously, I spent time as an entrepreneur in residence at GV, and was an early designer on Google Maps where I helped create <strong>Street&nbsp;View</strong>.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
-		<section id="advising" class="bg-light">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 mx-auto">
-						<h2>
-							Advising
-						</h2>
-						<p>
-							Between Uber and Cove, I spent two years primarily investing and advising seed stage, series A, and series B startups. I'm now heads down building Cove, but do occasional advising and angel investing in special cases.
-						</p>
-						<p>
-							I've advised these seed-stage, series A, and series B startups on design and product:
-						</p>
-						<ul>
-							<li>
-								<a href="http://regrello.com/">Regrello</a>&nbsp; Asana for manufacturing supply chains (acq. Salesforce)
-							</li>
-							<li>
-								<a href="https://usepepper.com/">Pepper</a>&nbsp; Connecting food suppliers with restaurants
-							</li>
-							<li>
-								<a href="https://officehours.com/">Office Hours</a> - Book time with knowledge professionals from around the world
-							</li>
-							<li>
-								<a href="http://doorstead.com/">Doorstead</a>&nbsp; Opendoor for rentals
-							</li>
-							<li>
-								<a href="http://cotta.ge">Cottage</a>&nbsp; Solving housing affordability by making it easy to build an ADU (acq. RenoFi)
-							</li>
-							<li>
-								<a href="http://heyfavor.com/">Favor</a>&nbsp; Helping women access affordable birth control and more
-							</li>
-							<li>
-								<a href="http://mightyhealth.com">Mighty Health</a>&nbsp; Personal coach for exercise, nutrition and wellness
-							</li>
-							<li>
-								<a href="http://flexspace.ai/">Flexspace</a>&nbsp; On demand marketplace for co-working space
-							</li>
-							
-							<li>
-								<a href="http://flowly.world/">Flowly</a>&nbsp; VR and biofeedback for pain and anxiety
-							</li>
+	<body class="bg-white text-slate-800 antialiased">
+		<div class="mx-auto max-w-2xl px-6 pb-14 pt-24 sm:pb-20 sm:pt-28 lg:pt-[162px]">
+			<article class="prose prose-slate prose-a:text-blue-700 hover:prose-a:text-blue-900 prose-h2:mt-14 prose-h2:mb-4 prose-h3:mt-8 prose-h3:mb-2">
 
-
-						</ul>
-						<p>
-							While I'm focused on Cove, I occasionally take on advising or angel investing in special cases. If you're building something new and think I might be a good match, <a href="#contact">get in touch</a>!
-						</p>
+				<!-- About -->
+				<div class="site-header">
+					<div class="headline-row">
+						<img src="andy-orange-sweater.jpg" alt="Photo of Andy" class="portrait">
+						<h1 class="!mb-1 !mt-0 font-serif font-semibold tracking-tight">
+							Hi, I’m Andy Szybalski!
+						</h1>
 					</div>
+					<p class="not-prose mb-10 mt-0 text-sm font-light tracking-wide text-slate-400">
+						sha · ’ball · ski
+					</p>
 				</div>
-			</div>
-		</section>
-		<section id="design-work">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 mx-auto">
-						<h2>
-							Design Notes
-						</h2>
-						<p>
-							This is not a full portfolio, but you can look at a few <a href="portfolio">design case studies</a> describing some of my work at Uber and Google.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
-		<section id="projects" class="bg-light">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 mx-auto">
-						<h2>
-							Side Projects
-						</h2>
-						<h3 id="osito">
-							Osito (2023–2024)
-						</h3>
-						<p>
-							<a href="https://osito.ai">Osito</a> was an AI group travel booking tool I built from the first commit.
-						</p>
-						<h3 id="onion-map">
-							Onion Map (2020)
-						</h3><a href="onionmap"><img width="225" style="float:left; margin: 0 10px 20px 0" src="onionmap/thumbnail.jpg"></a> <a href="onionmap">Onion Map</a> is a experimental map that radically deemphasizes streets, and highlights the relationship between topography and neighborhood names. It uses OpenStreetMap data, a bespoke Mapbox style, and some javascript to adjust contour colors dynamically based on the viewport.
-						<div style="clear:left"></div>
-						<h3 id="degen-blues">
-							Degen Blues (2022)
-						</h3>
-						<p><a href="https://degenblues.xyz">Degen Blues</a> is a smart contract that generates a new "robot music" melody every 24 hours, based on the movements in that day's Ethereum prices. The collection launched in early 2022 with 545 unique melodies, and will continue to automatically produce a new melody each day for eternity.</p>
-						<h3 id="zoom">
-							Zoom Backgrounds for Biden (2020)
-						</h3>
-						<p>
-							<a href="zoom"><img class="w-100 mt-2" src="zoom/zoom-heads.jpg"></a>
-						</p>
-						<p>
-							This started out as an art project between friends, and ended up raising $10,000 in donations for the Biden campaign.
-						</p><p>
-							In the early days of the Covid pandemic, what Zoom background to "wear" to work was every person's most visible fashion choice. With that in mind, I made a series of digital paintings intended for use as Zoom backgrounds—not too many garish colors, with plenty of room for your face in the middle. I did these paintings throughout 2020, first as a gift for a few friends, and later on a commission model, in exchange for contributions to the Biden/Harris campaign. 
-						</p>
-						<ul>
-							<li>
-								<a href="zoom/">Browse full resolution zoom backgrounds</a>
-							</li>
-							<li>
-								<a href="zoom/all-backgrounds.zip">Download ZIP of all 5 zoom backgrounds</a> (11.5&nbsp;MB)
-							</li>
-						</ul>
-						<h3>
-							Sutro Tower
-						</h3>In addition to my digital work, I occasionally work on good old fashioned canvas. One of my favorite pieces is this oil painting called <b>Sutro Tower Inc</b>—it shows the antennas of various TV and radio stations on the tower:<br>
-						<a href="art/sutro.jpg"><img style="margin-top:10px" src="art/sutro.jpg" width="180"></a>
-						<h3>
-							Older Projects
-						</h3>
-						<p>
-							If you're looking for one of the macOS apps I've developed in the past, like <strong>Shellsilver</strong>, <strong>Pyper</strong>, or <strong>Lunamoth</strong>: I'm sorry, these are no longer being maintained and are not compatible with current versions of Mac OS. There are lots of great alternatives out there, though.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
-		<section id="contact">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 mx-auto">
-						<h2>
-							Contact
-						</h2>
-						<p>
-							You can get in touch with me on <a href="https://www.linkedin.com/in/andyszy/">LinkedIn</a> or <a href="https://x.com/andyszy">X</a>, or email me using my first name and first three letters of my last name at Google's email product.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section><!-- Footer -->
-		<footer class="py-5 bg-dark">
-			<div class="container">
-				<p class="m-0 text-center text-white">
-					© <span id="year"></span>
+				<p>
+					I’m a designer and engineer, and currently a Partner Product Design Director at <strong>Microsoft&nbsp;AI</strong>. I got there when my startup <strong>Cove</strong> joined Microsoft in&nbsp;2026.
 				</p>
-			</div><!-- /.container -->
+				<p>
+					I’m also co-founder and board chair of <a href="https://tradewinds.school/"><strong>Tradewinds&nbsp;School</strong></a>, Hawaii’s first school designed for gifted minds, opening in Kaimukī in 2026. You can <a href="https://www.youtube.com/watch?v=qHmloALT1kg">see a segment about it on HI&nbsp;Now&nbsp;Daily</a>.
+				</p>
+				<p>
+					Earlier, I co-founded <strong>Uber Eats</strong>, and was an early designer on Google Maps where I launched <strong>Street&nbsp;View</strong>. Here’s <a href="https://elizlaraki.substack.com/p/the-eye-of-a-human">the story of how it began</a> and <a href="https://www.youtube.com/watch?v=_4Q7C_zi7fY">a talk about the early days</a>.
+				</p>
+				<p class="not-prose mt-6">
+					<a href="resume/" class="inline-flex items-center gap-1.5 rounded-full border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 no-underline transition hover:border-slate-400 hover:bg-slate-50">
+						View my full CV
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+					</a>
+				</p>
+
+				<!-- Talks & Press -->
+				<h2 id="talks">
+					Talks &amp; Press
+				</h2>
+				<div class="not-prose mt-5 grid grid-cols-3 gap-3 sm:gap-4">
+					<a href="https://www.youtube.com/watch?v=qHmloALT1kg" target="_blank" rel="noopener" class="group block">
+						<span class="relative block overflow-hidden rounded-lg shadow-md ring-1 ring-black/5 transition group-hover:shadow-lg">
+							<img src="img/thumb-tradewinds.jpg" alt="Tradewinds School on HI Now Daily" class="block aspect-video w-full object-cover">
+							<span class="pointer-events-none absolute inset-0 grid place-items-center">
+								<span class="flex h-8 w-8 items-center justify-center rounded-full bg-black/55 text-white transition group-hover:bg-black/75">
+									<svg viewBox="0 0 24 24" fill="currentColor" class="ml-0.5 h-4 w-4"><path d="M8 5v14l11-7z"></path></svg>
+								</span>
+							</span>
+						</span>
+						<span class="mt-2 block text-xs leading-snug text-slate-500 transition group-hover:text-slate-700">Tradewinds School on HI&nbsp;Now Daily</span>
+					</a>
+					<a href="https://www.youtube.com/watch?v=_4Q7C_zi7fY" target="_blank" rel="noopener" class="group block">
+						<span class="relative block overflow-hidden rounded-lg shadow-md ring-1 ring-black/5 transition group-hover:shadow-lg">
+							<img src="img/thumb-streetview.jpg" alt="A talk on the early days of Google Street View" class="block aspect-video w-full object-cover">
+							<span class="pointer-events-none absolute inset-0 grid place-items-center">
+								<span class="flex h-8 w-8 items-center justify-center rounded-full bg-black/55 text-white transition group-hover:bg-black/75">
+									<svg viewBox="0 0 24 24" fill="currentColor" class="ml-0.5 h-4 w-4"><path d="M8 5v14l11-7z"></path></svg>
+								</span>
+							</span>
+						</span>
+						<span class="mt-2 block text-xs leading-snug text-slate-500 transition group-hover:text-slate-700">The early days of Street&nbsp;View</span>
+					</a>
+					<a href="https://www.youtube.com/watch?v=UH1yTYn3bh8" target="_blank" rel="noopener" class="group block">
+						<span class="relative block overflow-hidden rounded-lg shadow-md ring-1 ring-black/5 transition group-hover:shadow-lg">
+							<img src="img/thumb-design.jpg" alt="The Design Material Has Changed" class="block aspect-video w-full object-cover">
+							<span class="pointer-events-none absolute inset-0 grid place-items-center">
+								<span class="flex h-8 w-8 items-center justify-center rounded-full bg-black/55 text-white transition group-hover:bg-black/75">
+									<svg viewBox="0 0 24 24" fill="currentColor" class="ml-0.5 h-4 w-4"><path d="M8 5v14l11-7z"></path></svg>
+								</span>
+							</span>
+						</span>
+						<span class="mt-2 block text-xs leading-snug text-slate-500 transition group-hover:text-slate-700">“The Design Material Has Changed”</span>
+					</a>
+				</div>
+
+				<!-- Advising -->
+				<h2 id="advising">
+					Advising
+				</h2>
+				<p>
+					Between Uber and Cove, I spent two years primarily investing and advising seed stage, series A, and series B startups. These days I’m focused on Microsoft AI and Tradewinds School, but I still do occasional advising and angel investing in special cases.
+				</p>
+				<p>
+					I’ve advised these seed-stage, series A, and series B startups on design and product:
+				</p>
+				<ul class="not-prose mt-5 grid list-none grid-cols-1 gap-x-8 gap-y-2.5 p-0 text-sm leading-snug text-slate-600 sm:grid-cols-2">
+					<li><strong class="font-semibold text-slate-800">Regrello</strong> — Asana for manufacturing supply chains (acq. Salesforce)</li>
+					<li><strong class="font-semibold text-slate-800">Pepper</strong> — Connecting food suppliers with restaurants (now Series&nbsp;C)</li>
+					<li><strong class="font-semibold text-slate-800">Office Hours</strong> — Book time with knowledge professionals from around the world</li>
+					<li><strong class="font-semibold text-slate-800">Doorstead</strong> — Opendoor for rentals</li>
+					<li><strong class="font-semibold text-slate-800">Cottage</strong> — Solving housing affordability by making it easy to build an ADU (acq. RenoFi)</li>
+					<li><strong class="font-semibold text-slate-800">The Pill Club</strong> — Helping women access affordable birth control and more</li>
+					<li><strong class="font-semibold text-slate-800">Mighty Health</strong> — Personal coach for exercise, nutrition and wellness</li>
+					<li><strong class="font-semibold text-slate-800">Flexspace</strong> — On demand marketplace for co-working space</li>
+					<li><strong class="font-semibold text-slate-800">Flowly</strong> — VR and biofeedback for pain and anxiety</li>
+				</ul>
+
+				<!-- Design Notes -->
+				<h2 id="design-work">
+					Design Notes
+				</h2>
+				<p>
+					This is not a full portfolio, but you can look at a few <a href="portfolio">design case studies</a> describing some of my work at Uber and Google.
+				</p>
+
+				<!-- Side Projects -->
+				<h2 id="projects">
+					Side Projects
+				</h2>
+				<div class="not-prose mt-5 gap-x-8 text-sm leading-snug text-slate-600 sm:columns-2">
+					<div class="mb-6 flex break-inside-avoid gap-3">
+						<div>
+							<h3 id="osito" class="m-0 text-sm font-semibold text-slate-800">
+								<a href="https://osito.ai" class="link-hairline">Osito</a>
+								<span class="ml-1 font-normal text-slate-400">2023–2024</span>
+							</h3>
+							<p class="mt-1">An AI group-travel booking tool I built from the first commit.</p>
+						</div>
+					</div>
+					<div class="mb-6 flex break-inside-avoid gap-3">
+						<a href="onionmap" class="shrink-0"><img src="onionmap/thumbnail.jpg" alt="Onion Map" class="h-16 w-16 rounded object-cover"></a>
+						<div>
+							<h3 id="onion-map" class="m-0 text-sm font-semibold text-slate-800">
+								<a href="onionmap" class="link-hairline">Onion Map</a>
+								<span class="ml-1 font-normal text-slate-400">2020</span>
+							</h3>
+							<p class="mt-1">An experimental map that deemphasizes streets and highlights the relationship between topography and neighborhood names, built with OpenStreetMap data and a bespoke Mapbox style.</p>
+						</div>
+					</div>
+					<div class="mb-6 flex break-inside-avoid gap-3">
+						<div>
+							<h3 id="degen-blues" class="m-0 text-sm font-semibold text-slate-800">
+								<a href="https://degenblues.xyz" class="link-hairline">Degen Blues</a>
+								<span class="ml-1 font-normal text-slate-400">2022</span>
+							</h3>
+							<p class="mt-1">A smart contract that generates a new “robot music” melody every 24 hours from that day’s Ethereum price movements—545 melodies at launch, and a new one every day, forever.</p>
+						</div>
+					</div>
+					<div class="mb-6 flex break-inside-avoid gap-3">
+						<a href="zoom" class="shrink-0"><img src="zoom/zoom-heads.jpg" alt="Zoom backgrounds" class="h-16 w-16 rounded object-cover"></a>
+						<div>
+							<h3 id="zoom" class="m-0 text-sm font-semibold text-slate-800">
+								<a href="zoom" class="link-hairline">Zoom Backgrounds for Biden</a>
+								<span class="ml-1 font-normal text-slate-400">2020</span>
+							</h3>
+							<p class="mt-1">Digital paintings made as Zoom backgrounds in early Covid—started as a gift for friends and grew into a commission model that raised $10,000 for the Biden campaign.</p>
+						</div>
+					</div>
+					<div class="mb-6 flex break-inside-avoid gap-3">
+						<a href="art/sutro.jpg" class="shrink-0"><img src="art/sutro.jpg" alt="Sutro Tower Inc oil painting" class="h-16 w-16 rounded object-cover"></a>
+						<div>
+							<h3 class="m-0 text-sm font-semibold text-slate-800">Sutro Tower</h3>
+							<p class="mt-1">An oil painting called <b>Sutro Tower Inc</b>, showing the TV and radio antennas on the tower—one of my favorite pieces on canvas.</p>
+						</div>
+					</div>
+					<div class="mb-6 flex break-inside-avoid gap-3">
+						<div>
+							<h3 class="m-0 text-sm font-semibold text-slate-800">Older Projects</h3>
+							<p class="mt-1">Old macOS apps like <strong class="font-semibold text-slate-700">Shellsilver</strong>, <strong class="font-semibold text-slate-700">Pyper</strong>, and <strong class="font-semibold text-slate-700">Lunamoth</strong> are no longer maintained or compatible with current macOS—but there are lots of great alternatives out there now.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Contact -->
+				<h2 id="contact">
+					Contact
+				</h2>
+				<p>
+					You can get in touch with me on <a href="https://www.linkedin.com/in/andyszy/">LinkedIn</a> or <a href="https://x.com/andyszy">X</a>, or email me at andyszy@gmail.com.
+				</p>
+			</article>
+		</div>
+		<footer class="border-t border-slate-100 py-8 text-center text-sm text-slate-400">
+			© <span id="year"></span>
 		</footer>
 		<script>
 			function toRoman(num) {

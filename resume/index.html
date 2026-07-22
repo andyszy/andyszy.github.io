@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Résumé of Andy Szybalski — designer & engineer. Product Designer at Microsoft AI, co-founder of Tradewinds School and Cove, early designer of Google Street View and Uber Eats.">
+		<title>Andy Szybalski — Résumé</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+		<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+		<script>
+			tailwind.config = {
+				theme: {
+					extend: {
+						colors: {
+							ink: "#1a1a1a",
+							accent: "#0b5cad",
+							muted: "#5b6470",
+						},
+						fontFamily: {
+							sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+							serif: ["Newsreader", "ui-serif", "Georgia", "serif"],
+						},
+					},
+				},
+			};
+		</script>
+		<style type="text/tailwindcss">
+			@layer base {
+				html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+				.link-hairline {
+					text-decoration: none;
+					border-bottom: 1px solid rgba(100, 116, 139, 0.35);
+				}
+			}
+			@media print {
+				@page { margin: 0.5in; }
+				.no-print { display: none !important; }
+				.sheet { box-shadow: none !important; margin: 0 !important; max-width: none !important; }
+				.entry { break-inside: avoid; }
+				a { color: #1a1a1a !important; text-decoration: none !important; }
+				.link-hairline { border-bottom: none !important; }
+			}
+		</style>
+	</head>
+	<body class="bg-slate-100 font-sans text-ink antialiased">
+		<main class="sheet mx-auto my-6 max-w-[850px] bg-white px-10 py-10 shadow-xl sm:px-14 sm:py-12 print:my-0">
+			<!-- Header -->
+			<header class="border-b border-slate-200 pb-6">
+				<h1 class="font-serif text-4xl font-600 tracking-tight text-ink sm:text-5xl">Andy Szybalski</h1>
+				<p class="mt-1 mb-3 text-sm font-light tracking-wide text-slate-400">sha · ’ball · ski</p>
+				<p class="mt-2 text-lg text-muted">Designer and Engineer</p>
+				<ul class="mt-4 flex flex-wrap gap-x-2 gap-y-1 text-sm text-muted">
+					<li><a class="font-medium text-accent link-hairline" href="mailto:andyszy@gmail.com">andyszy@gmail.com</a></li>
+					<li aria-hidden="true">·</li>
+					<li>Honolulu</li>
+				</ul>
+			</header>
+
+			<!-- Summary -->
+			<section class="prose prose-slate max-w-none pt-6 prose-p:my-0 prose-p:leading-relaxed">
+				<p>
+					Founding designer of <strong>Google Street View</strong>, first designer on the project that became
+					<strong>Waymo</strong>, co-founder of <strong>Uber Eats</strong>, co-founder of
+					<strong>Cove AI</strong> which I designed and built from the first commit and which was acquihired by Microsoft
+					in 2026. Now building new experiences at Microsoft and building a new school in Honolulu.
+				</p>
+			</section>
+
+			<!-- Experience -->
+			<section class="pt-8">
+				<h2 class="mb-1 text-xs font-700 uppercase tracking-[0.18em] text-accent">Experience</h2>
+				<div class="divide-y divide-slate-100">
+
+					<article class="entry grid grid-cols-1 gap-x-8 py-4 sm:grid-cols-[1fr_auto]">
+						<div>
+							<h3 class="text-base font-700 text-ink">Partner Product Design Director · <span class="text-accent">Microsoft AI</span></h3>
+							<ul class="mt-1 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted marker:text-slate-300">
+								<li>Building brand new AI experiences, continuing the work of Cove AI.</li>
+							</ul>
+						</div>
+						<p class="order-first text-sm font-500 text-muted sm:order-none sm:text-right">2026 — Present</p>
+					</article>
+
+					<article class="entry grid grid-cols-1 gap-x-8 py-4 sm:grid-cols-[1fr_auto]">
+						<div>
+							<h3 class="text-base font-700 text-ink">Co-Founder &amp; Board Chair · <span class="text-accent">Tradewinds School</span></h3>
+							<ul class="mt-1 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted marker:text-slate-300">
+								<li>Founding Hawaiʻi’s first school designed for gifted minds (grades K–5), opening in Kaimukī in 2026.</li>
+								<li>Building <strong>Rabbithole</strong>, an open-source AI learning platform where students, teachers, and an AI thought
+									partner explore ideas through Socratic dialogue and hands-on projects—activity management, generative mastery
+									tracking, exploration seeds, and learner profiles.</li>
+							</ul>
+						</div>
+						<p class="order-first text-sm font-500 text-muted sm:order-none sm:text-right">2025 — Present</p>
+					</article>
+
+					<article class="entry grid grid-cols-1 gap-x-8 py-4 sm:grid-cols-[1fr_auto]">
+						<div>
+							<h3 class="text-base font-700 text-ink">Co-Founder, Designer &amp; Engineer · <span class="text-accent">Cove</span></h3>
+							<ul class="mt-1 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted marker:text-slate-300">
+								<li>Co-founded a startup unlocking new ways for people to work together with AI; raised $6M from Sequoia Capital,
+									Elad Gil, Homebrew, and other world-class investors.</li>
+								<li>Led design and built product end-to-end, from the first prototype to a launched app. Team acquired by
+									Microsoft in 2026.</li>
+							</ul>
+						</div>
+						<p class="order-first text-sm font-500 text-muted sm:order-none sm:text-right">2023 — 2026</p>
+					</article>
+
+					<article class="entry grid grid-cols-1 gap-x-8 py-4 sm:grid-cols-[1fr_auto]">
+						<div>
+							<h3 class="text-base font-700 text-ink">Design Advisor, Builder &amp; Investor · <span class="text-accent">Independent</span></h3>
+							<ul class="mt-1 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted marker:text-slate-300">
+								<li>Advised founders in the earliest stages of building their businesses. Highlights: Regrello
+									(acq. Salesforce), Pepper (now Series C), Cottage (acq. RenoFi), Doorstead, Office Hours, Mighty Health,
+									The Pill Club, Flexspace, and Flowly.</li>
+								<li>With a team of three, self-funded and built an AI powered travel booking tool called
+									Osito. Booked some revenue, abandoned to work on Cove.</li>
+								<li>Launched an experimental generative music project.</li>
+								<li>Angel invested alongside Sequoia and Greylock.</li>
+							</ul>
+						</div>
+						<p class="order-first text-sm font-500 text-muted sm:order-none sm:text-right">2019 — 2024</p>
+					</article>
+
+					<article class="entry grid grid-cols-1 gap-x-8 py-4 sm:grid-cols-[1fr_auto]">
+						<div>
+							<h3 class="text-base font-700 text-ink">Sr Director of Product Design, Uber Eats · <span class="text-accent">Uber</span></h3>
+							<ul class="mt-1 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted marker:text-slate-300">
+								<li>On the founding team of Uber Eats; built from nothing into a $25B+ GMV business and a significant second
+									line of business alongside rides.</li>
+								<li>Built and led an all-star design org in the era of large human teams—50+ product designers, researchers, and
+									UX writers—across the eater, restaurant, and courier sides of the marketplace.</li>
+							</ul>
+						</div>
+						<p class="order-first text-sm font-500 text-muted sm:order-none sm:text-right">2014 — 2020</p>
+					</article>
+
+					<article class="entry grid grid-cols-1 gap-x-8 py-4 sm:grid-cols-[1fr_auto]">
+						<div>
+							<h3 class="text-base font-700 text-ink">Staff User Experience Designer · <span class="text-accent">Google</span></h3>
+							<ul class="mt-1 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted marker:text-slate-300">
+								<li>Founding designer of <strong>Street View</strong>, and the first designer on the self-driving car project (now Waymo).</li>
+								<li>Led design on early AI products in the pre-LLM era like <strong>Google Now</strong> and <strong>Schemer</strong>, and designed
+									key parts of Google Earth and Google Maps.</li>
+							</ul>
+						</div>
+						<p class="order-first text-sm font-500 text-muted sm:order-none sm:text-right">2006 — 2014</p>
+					</article>
+
+				</div>
+			</section>
+
+			<!-- Education -->
+			<section class="pt-8">
+				<h2 class="mb-2 text-xs font-700 uppercase tracking-[0.18em] text-accent">Education</h2>
+				<div class="entry grid grid-cols-1 gap-x-8 sm:grid-cols-[1fr_auto]">
+					<p class="text-sm leading-relaxed text-muted">
+						<span class="font-700 text-ink">Stanford University</span> — B.S. and M.S. Computer Science (with Honors and Distinction)
+					</p>
+					<p class="order-first text-sm font-500 text-muted sm:order-none sm:text-right">Stanford, CA</p>
+				</div>
+			</section>
+
+			<!-- Earlier -->
+			<section class="pt-8">
+				<h2 class="mb-2 text-xs font-700 uppercase tracking-[0.18em] text-accent">Earlier</h2>
+				<ul class="space-y-2 text-sm leading-relaxed text-muted">
+					<li><span class="font-600 text-ink">GV</span> — Entrepreneur in Residence <span class="text-slate-400">(2014)</span></li>
+					<li><span class="font-600 text-ink">Apple</span> — Software Engineering Intern, Final Cut Pro family; Objective-C <span class="text-slate-400">(2005)</span></li>
+					<li><span class="font-600 text-ink">Firaxis Games</span> — Software Engineering Intern, Sid Meier’s Civilization IV <span class="text-slate-400">(2004)</span></li>
+				</ul>
+			</section>
+
+			<!-- Skills -->
+			<section class="pt-8">
+				<h2 class="mb-2 text-xs font-700 uppercase tracking-[0.18em] text-accent">Skills</h2>
+				<p class="text-sm leading-relaxed text-muted">
+					Designing AI personalities · Shaping the editorial point of view of AI products ·
+					Product &amp; interaction design · Zero-to-one product building ·
+					Prototyping &amp; front-end engineering · AI product design
+				</p>
+			</section>
+		</main>
+
+		<footer class="no-print pb-10 text-center text-xs text-slate-400">
+			<a class="hover:text-slate-600" href="https://andy.bigwhitebox.org">← back to andy.bigwhitebox.org</a>
+		</footer>
+	</body>
+</html>
