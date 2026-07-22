@@ -1,178 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-NG1PWE4B8K"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-NG1PWE4B8K"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
 
-  gtag('config', 'G-NG1PWE4B8K');
-</script>
+		  gtag('config', 'G-NG1PWE4B8K');
+		</script>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="">
-		<meta name="author" content="">
+		<meta name="description" content="Design case studies by Andy Szybalski — building Cove, Uber Eats, and Google Street View.">
+		<meta name="author" content="Andy Szybalski">
 		<title>
-			Portfolio Case Studies - Andy Szybalski
-		</title><!-- Bootstrap core CSS -->
-		<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"><!-- Custom styles for this template -->
-		<link href="../css/scrolling-nav.css" rel="stylesheet">
-		<link href="../css/andy.css" rel="stylesheet"><!-- Navigation -->
+			Case Studies — Andy Szybalski
+		</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+		<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+		<script>
+			tailwind.config = {
+				theme: { extend: { fontFamily: { serif: ["Newsreader", "ui-serif", "Georgia", "serif"] } } },
+			};
+		</script>
+		<style>
+			.prose a {
+				text-decoration: none;
+				border-bottom: 1px solid rgba(100, 116, 139, 0.35);
+			}
+			figure.shot a { border-bottom: 0; }
+		</style>
 	</head>
-	<body>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-			<div class="container">
-				<a class="navbar-brand js-scroll-trigger" href="../">Andy Szybalski</a>
-			</div>
-		</nav>
-		<section id="intro" class="bg-light">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 mx-auto">
-						<h1>
-							Portfolio Case Studies
-						</h1>
-						<p>
-							The below case studies from my time at Uber and Google are meant to illustrate a few of key experiences from my career, not to get into the weeds of my UX and visual design thinking.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
-		<section id="eats">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 mx-auto">
-						<h2>
-							Uber Eats (2014–2020)
-						</h2>
-						<h3>
-							Laying the groundwork for Uber’s new businesses (2014)
-						</h3>
-						<p>
-							I joined Uber as a founding member of the Uber Everything team, with the charter to start offering new services beyond rides and find Uber’s next billion-dollar business.
-						</p>
-						<p>
-							I quickly recognized it would be difficult to experiment within the paradigm of the Driver app at the time: it assumed all “jobs” were human riders, and only one job could be happening at a time (aside from some hacks to accommodate Uber Pool, which had just launched). To accelerate our progress, I took over management of Uber’s Driver Experience alongside my Uber Everything responsibilities, and rallied the team to transform the Driver app into a platform for multiple types of work—an app through which Uber could dispatch any series of “go here” and “do this” tasks. To this end, we introduced two new UX primitives, “go steps” and “do steps":
-						</p><img src="courier-go-do.jpg" width="100%">
-						<p>
-							These simple primitives, along with the dispatch architecture to support it, proved very flexible. Asssmbling a team of 2–3 designers, I was able to designed MVP versions of both the consumer- and partner-facing products. and allowed us to launch <a href="https://techcrunch.com/2014/08/26/uberfresh/">Uber Fresh</a>, <a href="https://www.theverge.com/2018/3/31/17184480/uber-uberrush-shut-down">Uber Rush</a>, and <a href="https://time.com/3145063/uber-corner-store/">Uber Corner Store</a> within a few months, gathering signal on product market fit.
-						</p>
-						<p>
-							Based on our learnings, we focused our energies on a refinement of Uber Fresh that we called <strong>Uber Eats</strong>.
-						</p>
-						<h3>
-							Designing a three-sided marketplace (2015–2020)
-						</h3>
-						<p>
-							With Uber Eats, we weren’t just building a single product, but a marketplace with distinct products for eaters, couriers, and restaurant employees (both kitchen staff and managers), as well as an array of internal tools for local ops teams to manage network reliability and curate local content.
-						</p>
-						<p>
-							We couldn’t just design independently for each user type—we also needed to consider the dispatch and ranking algorithms and incentives that governed the performance incentives and interactions between the three sides of our marketplace; for example:
-						</p>
-						<ul>
-							<li>How might we reward the most-loved restaurants with more prominence in the Eater app, and coach lower-performing restaurants to improve? Should food ratings, speed, and defect rate be rolled into a single quality score, or do they need to be treated as distinct concepts?
-							</li>
-							<li>How might we encourage eaters to create orders that are more likely to be “batchable,” to reduce delivery cost? Can we pass along some of the cost savings to the eater?
-							</li>
-							<li>How can we get handoffs between restaurants and couriers to happen like clockwork, while minimizing the burden on restaurant staff to tell us exactly when each order is complete?
-							</li>
-						</ul>
-						<p>
-							Although I was quite involved in many of the big UX challenges along the way, I was supported by many very capable ICs, so I’m not going to focus on individual UX challenges in this case study. However, the screenshots below should give you a sense of the breadth of our team’s work, and the level of craft in our execution:
-						</p><img class="screenshot" src="eater-feed.jpg" width="45%"> <img class="screenshot" src="eater-resto.jpg" width="45%"> <img class="screenshot" src="resto-dash.jpg" width="100%"> <img class="screenshot" src="resto-bi.png" width="100%"> <img class="screenshot" src="courier-dispatch.png" width="45%"> <img class="screenshot" src="genie-complex.png" width="45%">
-						<h3>
-							Building a thriving team (2014–2020)
-						</h3>
-						<p>
-							<img src="pirates.jpg" width="100%">
-						</p>
-						<div class="photo-caption">
-							Uber Eats design team as pirates, 2019
-						</div>
-						<p>
-							As head of design for Eats, one of my primary “work products” was the team itself. The early Uber Eats design team that I personally assembled consisted of CS grads, art school graduates, former chefs, financial analysts, and ballet dancers; all of them were high-bit-rate thinkers and white-hot creative problem solvers. This core group was admired internally and externally for its talent and culture, and this powerful positive feedback loop helped me build the Uber Eats design team from zero to 60 people over the course of 5 years. My org was also the most gender-diverse design org at Uber: women comprised 54% of my org, including 7 out of 11 managers.
-						</p>
-						<p>
-							I’m also proud that I built a culture at Eats that embraced the scrappiness and speed of Uber but was also known as an inclusive, supportive place to collaborate and grow as a designer. I think shipping great work depends on hitting the sweet spot between autonomy and collaboration: where each designer is the “head of design” to their cross-functional counterparts, and yet also feels fully part of a design team with a lively crit culture and an approach to problem solving that is holistic rather than siloed.
-						</p>
-						<p>
-							In 2016, our Eats tech teams were completely US-based, yet we needed to design for Uber Eats users in an increasing number of markets beyond the US (eventually in 45 countries). To help us rise to the challenge, I introduced the <strong>Walkabout initiative</strong> as an ongoing part of our design team’s culture. Over the next four years, we’d send groups of 3–5 team members on dozens of trips to an international Eats markets. During these trips, which were distinct from our UX Research field studies, our designers would focus building relationships with our local teams and customers, understanding the cultural context and urban landscape, and assessing the quality of our baseline customer experience.
-						</p><!--TODO: walkabout photo -->
-						<p>
-							Sending every designer on an annual Walkabout helped our team, which was almost completely US-based, mitigate our natural biases. It was also a great team bonding experience and rite of passage for new team members, and an amazing perk for recruiting.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
-		<section id="google" class="bg-light">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 mx-auto">
-						<h2>
-							Google (2006–2014)
-						</h2>
-						<p>
-							For good measure, I wanted to include one case study from my IC career, although I'll focus here more on innovation rather than craft:
-						</p>
-						<h3>
-							Taking Street View from zero to one (2006–2010)
-						</h3>
-						<p>
-							In 2006, I joined a team of engineers called Cityblock that had been collecting and processing imagery from a couple experimental cars; they weren’t sure what to do with that imagery yet. They had some notions of OCRing the images to improve search, or stitching the imagery into flat “pushbroom” images. As the solo designer on this project I led the design vision and execution from zero through launch, and a couple years beyond.
-						</p>
-						<p>
-							<img class="screenshot" src="street-view-map.jpg" width="45%"> <img class="screenshot" src="street-view-wellington.jpg" width="45%">
-						</p>
-						<div class="photo-caption">
-							Street View circa 2009
-						</div>
-						<p>
-							Many of the big design decisions seem obvious in retrospect, but we were charting new territory at the time. Some contributions I’m especially proud of:
-						</p>
-						<ul>
-							<li>Convinced the team that an immersive 360° experience was essential, and that this experience should live within Google Maps. This required building with Flash (a first for Google) due to the limitations of HTML/JS/CSS at the time.
-							</li>
-							<li>Designed the draggable Pegman avatar as the link between Street View and Google Maps. Pegman looks different from each angle, giving an additional visual cue for orientation. Pegman’s perch at the top of the zoom slider subtly reinforces Street View as the closest zoom level. (See above left.)
-							</li>
-							<li>Developed a navigation model with navigation arrows inside the imagery, anchored to “yellow brick roads” for orientation. Rather than being pinned in screen-space or real-space, the navigation affordances would slide around intelligently to stay in view as you pan and zoom. (See above right.)
-							</li>
-							<li>I also coined a name “Street Views” for the product, which stuck (thankfully minus one character).
-							</li>
-						</ul>
-						<p>
-							I'm very proud to have given form to the Street View we know and love today (and establishing the template that would be followed by all its competitors).
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
-		<section id="more" class="">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 mx-auto">
-						<h2>
-							Want to see more?
-						</h2>
-						<p>
-							If you want to hear more about my work or go deeper into any of the above projects, <a href="../#contact">get in touch</a>.
-						</p>
-						<p>
-							You can also see some of my extracurricular projects at my <a href="..">home page</a>.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
-		<footer class="py-5 bg-dark">
-			<div class="container">
-				<p class="m-0 text-center text-white">
-					© MMXX
+	<body class="bg-white text-slate-800 antialiased">
+		<div class="mx-auto max-w-3xl px-6 pb-14 pt-16 sm:pb-20 sm:pt-20">
+			<a href="../" class="group inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 no-underline transition hover:text-slate-800">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 transition group-hover:-translate-x-0.5"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>
+				Andy Szybalski
+			</a>
+
+			<article class="prose prose-slate mt-8 max-w-none prose-a:text-blue-700 hover:prose-a:text-blue-900 prose-h2:mt-16 prose-h2:mb-4 prose-h2:font-serif prose-h2:font-semibold prose-h2:tracking-tight prose-h3:mt-9 prose-h3:mb-2 prose-h3:text-lg prose-h3:font-semibold prose-img:my-0">
+
+				<!-- Intro -->
+				<h1 class="!mb-3 !mt-0 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">
+					Case Studies
+				</h1>
+				<p class="lead text-lg text-slate-600">
+					A few stories from across my career—building <strong>Cove</strong>, <strong>Uber&nbsp;Eats</strong>, and <strong>Google Street&nbsp;View</strong>. These are meant to give a feel for how I think and work, not to be an exhaustive portfolio or to get into the weeds of every UX and visual-design decision.
 				</p>
-			</div><!-- /.container -->
+
+				<!-- Cove -->
+				<h2 id="cove">
+					Cove
+					<span class="block text-base font-normal not-italic text-slate-400">2023–2025 · co-founder, sole designer &amp; full-stack engineer</span>
+				</h2>
+				<p>
+					After Uber I spent a couple of years investing and advising, and the whole time I was quietly poking at large language models. When GPT-3 landed it felt like an alien technology—we were all prodding it with sticks, trying to figure out what it could actually do. That question wouldn’t leave me alone, so in 2023 I started <a href="https://cove.ai"><strong>Cove</strong></a> and built the first version from the first commit: I was the sole designer and, most days, the full-stack engineer too.
+				</p>
+				<p>
+					My thesis was that an LLM is a genuinely new <em>material</em>, and we were building the wrong things with it. Chatting with an AI in natural language is wildly powerful, but a single-threaded chat is a strange place to do real thinking. When people work on anything complex, their process has a shape: explore widely, collect a pile of ideas, then prune. We diverge, then converge. A lone scrolling transcript fights that at every step—imagine trying to run an entire project, or a whole company, through one Slack thread.
+				</p>
+
+				<h3>Cove Canvas: giving AI a place to think with you</h3>
+				<p>
+					The first version of Cove was a spatial canvas. Instead of a transcript, you and the AI co-created persistent “cards”—documents, tables, little apps—that you could arrange, revisit, and build on over days. I got to design and build the whole thing end to end: a React web app plus an Electron desktop app and a Chrome extension on the front end, Node and Python services behind them, a real-time multiplayer store, and a vector database for retrieval. I care a lot about build quality, so I sweated the details—optimistic updates, low latency, and satisfying micro-interactions like collision detection and a bird’s-eye view that reinforced how the canvas worked.
+				</p>
+				<figure class="shot not-prose my-9">
+					<video class="w-full rounded-xl shadow-md ring-1 ring-black/5" src="cove-canvas.mp4" poster="cove-canvas-poster.jpg" autoplay loop muted playsinline preload="metadata"></video>
+					<figcaption class="mt-3 text-center text-sm leading-snug text-slate-500">Cove Canvas: an infinite, spatial workspace where you and the AI co-create cards—notes, files, flashcards, even little custom apps—and arrange them however you happen to think.</figcaption>
+				</figure>
+				<p>
+					We had devoted users who’d spend 30+ minutes a session wrestling with genuinely hard projects, and the problems we were solving clearly resonated. But growth plateaued, and models kept getting better underneath us. We’d gotten some big things right—persistent artifacts and support for nonlinear exploration—and some things wrong. There was too much housekeeping, our generative UI was trapped inside cards, and honestly there was just too much newness to absorb at once. The biggest lesson: the human–AI partnership isn’t 50/50, and for most tasks natural language beats direct manipulation.
+				</p>
+
+				<h3>Links &amp; Tabs: a very old paradigm for nonlinear thinking</h3>
+				<p>
+					That thinking led somewhere unexpected. One afternoon of vibe-coding a prototype, the obvious insight hit: <em>wait, it’s all just links.</em> The web already gave us a beautifully familiar paradigm for nonlinear thinking—pages, hyperlinks, and tabs—and nobody had to learn it. So Cove v2 became a generative workspace built around pages. You ask a question, Cove writes a page, and every meaningful noun on that page is a link. Some links point to real URLs; others are prompts that generate the next page when you click them. Pages open in tabs, the whole workspace is shareable and multiplayer, and changing the underlying data ripples downstream into things like maps and charts.
+				</p>
+				<figure class="shot not-prose my-9">
+					<a href="cove-workspace.png" target="_blank" rel="noopener">
+						<img src="cove-workspace.png" alt="A Cove workspace with tabs, a chat thread, and a generated Mapbox map of Uber surge pricing across Austin" class="w-full rounded-xl shadow-md ring-1 ring-black/5">
+					</a>
+					<figcaption class="mt-3 text-center text-sm leading-snug text-slate-500">Cove v2: pages, spreadsheets, and maps generated on the fly, opened in tabs, and edited together. Follow a thought, branch off, and come back—without losing the thread.</figcaption>
+				</figure>
+				<p>
+					A lot of the craft happened at the seam between design and prompt. One recurring question was how much visual judgment to leave to the model versus prescribe up front. To make a tool like Mapbox reliable in the hands of an LLM, for example, I wrapped its sprawling SDK in a much simpler component with a handful of opinionated options—so the model could produce a great map from a short, legible instruction. I spend nearly as much time shaping prompts as I do the pixels; that’s where you find the grain of the material, the intersection of what’s genuinely useful and what the model can actually do.
+				</p>
+				<figure class="shot not-prose my-9">
+					<a href="cove-page.png" target="_blank" rel="noopener">
+						<img src="cove-page.png" alt="A clean, generated Cove page titled 'Tips for Visiting Hunakai Beach' with linked sub-topics" class="w-full rounded-xl shadow-md ring-1 ring-black/5">
+					</a>
+					<figcaption class="mt-3 text-center text-sm leading-snug text-slate-500">Every generated page is calm, readable, and clickable—each highlighted phrase spins up the next page in the workspace.</figcaption>
+				</figure>
+				<p>
+					From there we started indexing and querying connected sources like Shopify and Klaviyo, working with design partners to find product-market fit, and leaning into an “AI consultant” framing for a slimmed-down version people could grasp immediately. In 2026, Cove joined <strong>Microsoft&nbsp;AI</strong>, where I’m now a Partner Product Design Director continuing to chase these ideas.
+				</p>
+
+				<!-- Uber Eats -->
+				<h2 id="eats">
+					Uber Eats
+					<span class="block text-base font-normal not-italic text-slate-400">2014–2020 · founding team, head of design</span>
+				</h2>
+				<h3>Laying the groundwork for Uber’s new businesses</h3>
+				<p>
+					I joined Uber as a founding member of the Uber Everything team, with the charter to start offering new services beyond rides and find Uber’s next billion-dollar business.
+				</p>
+				<p>
+					I quickly recognized it would be difficult to experiment within the paradigm of the Driver app at the time: it assumed all “jobs” were human riders, and only one job could be happening at a time (aside from some hacks to accommodate Uber Pool, which had just launched). To accelerate our progress, I took over management of Uber’s Driver Experience alongside my Uber Everything responsibilities, and rallied the team to transform the Driver app into a platform for multiple types of work—an app through which Uber could dispatch any series of “go here” and “do this” tasks. To this end, we introduced two new UX primitives, “go steps” and “do steps”:
+				</p>
+				<figure class="shot not-prose my-9">
+					<img src="courier-go-do.jpg" alt="Uber driver app go steps and do steps" class="w-full rounded-xl shadow-sm ring-1 ring-black/5">
+				</figure>
+				<p>
+					These simple primitives, along with the dispatch architecture to support them, proved remarkably flexible. Assembling a team of just 2–3 designers, I designed MVP versions of both the consumer- and partner-facing products, which let us launch <a href="https://techcrunch.com/2014/08/26/uberfresh/">Uber Fresh</a>, <a href="https://www.theverge.com/2018/3/31/17184480/uber-uberrush-shut-down">Uber Rush</a>, and <a href="https://time.com/3145063/uber-corner-store/">Uber Corner Store</a> within a few months, gathering signal on product-market fit. The idea took off internally too—before long I was overhearing people I’d never met talking about “go steps” and “do steps” in the hallway. Nearly a decade later, the driver app still runs on that same basic model.
+				</p>
+				<p>
+					Based on our learnings, we focused our energies on a refinement of Uber Fresh that we called <strong>Uber Eats</strong>.
+				</p>
+				<h3>Designing a three-sided marketplace</h3>
+				<p>
+					With Uber Eats, we weren’t just building a single product, but a marketplace with distinct products for eaters, couriers, and restaurant employees (both kitchen staff and managers), as well as an array of internal tools for local ops teams to manage network reliability and curate local content.
+				</p>
+				<p>
+					We couldn’t just design independently for each user type—we also needed to consider the dispatch and ranking algorithms and incentives that governed the performance and interactions between the three sides of our marketplace; for example:
+				</p>
+				<ul>
+					<li>How might we reward the most-loved restaurants with more prominence in the Eater app, and coach lower-performing restaurants to improve? Should food ratings, speed, and defect rate be rolled into a single quality score, or do they need to be treated as distinct concepts?</li>
+					<li>How might we encourage eaters to create orders that are more likely to be “batchable,” to reduce delivery cost? Can we pass along some of the cost savings to the eater?</li>
+					<li>How can we get handoffs between restaurants and couriers to happen like clockwork, while minimizing the burden on restaurant staff to tell us exactly when each order is complete?</li>
+				</ul>
+				<p>
+					Although I was quite involved in many of the big UX challenges along the way, I was supported by many very capable ICs, so I won’t focus on individual UX problems here. But the screenshots below should give you a sense of the breadth of our team’s work, and the level of craft in our execution:
+				</p>
+				<div class="not-prose my-9 grid grid-cols-1 gap-4 sm:grid-cols-2">
+					<img class="w-full rounded-xl shadow-sm ring-1 ring-black/5" src="eater-feed.jpg" alt="Uber Eats eater feed">
+					<img class="w-full rounded-xl shadow-sm ring-1 ring-black/5" src="eater-resto.jpg" alt="Uber Eats restaurant page">
+					<img class="w-full rounded-xl shadow-sm ring-1 ring-black/5 sm:col-span-2" src="resto-dash.jpg" alt="Uber Eats restaurant dashboard">
+					<img class="w-full rounded-xl shadow-sm ring-1 ring-black/5 sm:col-span-2" src="resto-bi.png" alt="Uber Eats restaurant business intelligence">
+					<img class="w-full rounded-xl shadow-sm ring-1 ring-black/5" src="courier-dispatch.png" alt="Uber Eats courier dispatch">
+					<img class="w-full rounded-xl shadow-sm ring-1 ring-black/5" src="genie-complex.png" alt="Uber Eats internal ops tooling">
+				</div>
+				<h3>Building a thriving team</h3>
+				<figure class="shot not-prose my-9">
+					<img src="pirates.jpg" alt="Uber Eats design team dressed as pirates, 2019" class="w-full rounded-xl shadow-sm ring-1 ring-black/5">
+					<figcaption class="mt-3 text-center text-sm italic leading-snug text-slate-500">The Uber Eats design team as pirates, 2019.</figcaption>
+				</figure>
+				<p>
+					As head of design for Eats, one of my primary “work products” was the team itself. The early Uber Eats design team that I personally assembled consisted of CS grads, art-school graduates, former chefs, financial analysts, and ballet dancers; all of them were high-bit-rate thinkers and white-hot creative problem solvers. This core group was admired internally and externally for its talent and culture, and that positive feedback loop helped me grow the Uber Eats design team from zero to 60 people over five years. My org was also the most gender-diverse design org at Uber: women comprised 54% of my org, including 7 out of 11 managers.
+				</p>
+				<p>
+					I’m also proud that I built a culture at Eats that embraced the scrappiness and speed of Uber but was also known as an inclusive, supportive place to collaborate and grow as a designer. I think shipping great work depends on hitting the sweet spot between autonomy and collaboration: where each designer is the “head of design” to their cross-functional counterparts, and yet also feels fully part of a design team with a lively crit culture and an approach to problem solving that is holistic rather than siloed.
+				</p>
+				<p>
+					In 2016, our Eats tech teams were completely US-based, yet we needed to design for Uber Eats users in an increasing number of markets beyond the US (eventually 45 countries). To help us rise to the challenge, I introduced the <strong>Walkabout initiative</strong> as an ongoing part of our design team’s culture. Over the next four years, we’d send groups of 3–5 team members on dozens of trips to international Eats markets. During these trips, which were distinct from our UX Research field studies, our designers would focus on building relationships with our local teams and customers, understanding the cultural context and urban landscape, and assessing the quality of our baseline customer experience.
+				</p>
+				<p>
+					Sending every designer on an annual Walkabout helped our team, which was almost completely US-based, mitigate our natural biases. It was also a great team-bonding experience and rite of passage for new team members, and an amazing perk for recruiting. All of it added up: Eats grew into a $25B+ business that helped carry Uber through the pandemic.
+				</p>
+
+				<!-- Google Street View -->
+				<h2 id="google">
+					Google Street View
+					<span class="block text-base font-normal not-italic text-slate-400">2006–2010 · founding designer</span>
+				</h2>
+				<p>
+					For good measure, I wanted to include one case study from my IC career, though here I’ll focus more on innovation than on craft.
+				</p>
+				<figure class="shot not-prose my-9">
+					<img src="streetview-van.png" alt="Cartoon of Andy driving the Cityblock camera van" class="mx-auto w-full max-w-md">
+					<figcaption class="mt-1 text-center text-sm italic leading-snug text-slate-500">Where it started: the Cityblock camera van.</figcaption>
+				</figure>
+				<h3>Taking Street View from zero to one</h3>
+				<p>
+					In 2006, I joined a team of engineers called Cityblock that had been collecting and processing imagery from a couple of experimental cars; they weren’t sure what to do with that imagery yet. They had some notions of OCRing the images to improve search, or stitching the imagery into flat “pushbroom” panoramas. As the solo designer on this project I led the design vision and execution from zero through launch, and for a couple of years beyond.
+				</p>
+				<div class="not-prose my-9 grid grid-cols-1 gap-4 sm:grid-cols-2">
+					<img class="w-full rounded-xl shadow-sm ring-1 ring-black/5" src="street-view-map.jpg" alt="Early Street View with Pegman on the zoom slider">
+					<img class="w-full rounded-xl shadow-sm ring-1 ring-black/5" src="street-view-wellington.jpg" alt="Early Street View navigation arrows">
+				</div>
+				<div class="photo-caption -mt-6 mb-6 text-center text-sm italic text-slate-500">Street View circa 2009</div>
+				<p>
+					Many of the big design decisions seem obvious in retrospect, but we were charting new territory at the time. A few contributions I’m especially proud of:
+				</p>
+				<ul>
+					<li>Convinced the team that an immersive 360° experience was essential, and that it should live inside Google Maps. This meant building with Flash (a first for Google) given the limitations of HTML/JS/CSS at the time.</li>
+					<li>Designed the draggable Pegman avatar as the link between Street View and Google Maps. Pegman looks different from each angle, giving an extra visual cue for orientation, and his perch at the top of the zoom slider subtly reinforces Street View as the closest zoom level.</li>
+					<li>Developed a navigation model with arrows inside the imagery, anchored to “yellow brick roads” for orientation. Rather than being pinned in screen-space or real-space, the navigation affordances slide around intelligently to stay in view as you pan and zoom.</li>
+					<li>I also coined the name “Street Views” for the product, which stuck (thankfully minus one character).</li>
+				</ul>
+				<figure class="shot not-prose my-9">
+					<a href="streetview-classic.jpg" target="_blank" rel="noopener">
+						<img src="streetview-classic.jpg" alt="The Street View interface with Pegman, in-imagery navigation arrow, and map inset" class="w-full rounded-xl shadow-md ring-1 ring-black/5">
+					</a>
+					<figcaption class="mt-3 text-center text-sm leading-snug text-slate-500">The Street View we know today—Pegman, the in-imagery navigation arrow, and the map inset all trace back to those early decisions.</figcaption>
+				</figure>
+				<p>
+					I’m very proud to have given form to the Street View we know and love today—and to have set the template that every competitor would go on to follow.
+				</p>
+
+				<!-- More -->
+				<h2 id="more">
+					Want to see more?
+				</h2>
+				<p>
+					If you’d like to hear more about my work or go deeper into any of these projects, <a href="../#contact">get in touch</a>. You can also see some of my extracurricular projects back on my <a href="..">home page</a>.
+				</p>
+			</article>
+		</div>
+		<footer class="border-t border-slate-100 py-8 text-center text-sm text-slate-400">
+			© <span id="year"></span>
 		</footer>
+		<script>
+			function toRoman(num) {
+				const romanNumerals = [
+					['M', 1000], ['CM', 900], ['D', 500], ['CD', 400],
+					['C', 100], ['XC', 90], ['L', 50], ['XL', 40],
+					['X', 10], ['IX', 9], ['V', 5], ['IV', 4], ['I', 1]
+				];
+				let result = '';
+				for (let [roman, value] of romanNumerals) {
+					while (num >= value) {
+						result += roman;
+						num -= value;
+					}
+				}
+				return result;
+			}
+			document.getElementById('year').textContent = toRoman(new Date().getFullYear());
+		</script>
 	</body>
 </html>
