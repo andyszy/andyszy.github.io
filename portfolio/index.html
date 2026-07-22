@@ -68,10 +68,8 @@
 					The first version of Cove was a spatial canvas. Instead of a transcript, you and the AI co-created persistent “cards”—documents, tables, little apps—that you could arrange, revisit, and build on over days. I got to design and build the whole thing end to end: a React web app plus an Electron desktop app and a Chrome extension on the front end, Node and Python services behind them, a real-time multiplayer store, and a vector database for retrieval. I care a lot about build quality, so I sweated the details—optimistic updates, low latency, and satisfying micro-interactions like collision detection and a bird’s-eye view that reinforced how the canvas worked.
 				</p>
 				<figure class="shot not-prose my-9">
-					<a href="cove-spreadsheet.png" target="_blank" rel="noopener">
-						<img src="cove-spreadsheet.png" alt="Cove turning a request into a structured spreadsheet of CDC growth-chart data" class="w-full rounded-xl shadow-md ring-1 ring-black/5">
-					</a>
-					<figcaption class="mt-3 text-center text-sm leading-snug text-slate-500">Ask a question and Cove builds real artifacts you can keep working with—here, turning a prompt into a structured, editable dataset.</figcaption>
+					<video class="w-full rounded-xl shadow-md ring-1 ring-black/5" src="cove-canvas.mp4" poster="cove-canvas-poster.jpg" autoplay loop muted playsinline preload="metadata"></video>
+					<figcaption class="mt-3 text-center text-sm leading-snug text-slate-500">Cove Canvas: an infinite, spatial workspace where you and the AI co-create cards—notes, files, flashcards, even little custom apps—and arrange them however you happen to think.</figcaption>
 				</figure>
 				<p>
 					We had devoted users who’d spend 30+ minutes a session wrestling with genuinely hard projects, and the problems we were solving clearly resonated. But growth plateaued, and models kept getting better underneath us. We’d gotten some big things right—persistent artifacts and support for nonlinear exploration—and some things wrong. There was too much housekeeping, our generative UI was trapped inside cards, and honestly there was just too much newness to absorb at once. The biggest lesson: the human–AI partnership isn’t 50/50, and for most tasks natural language beats direct manipulation.
