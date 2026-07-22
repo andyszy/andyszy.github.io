@@ -35,9 +35,11 @@
 				}
 			}
 			@media print {
-				@page { margin: 0.5in; }
+				@page { margin: 0; }
+				html { font-size: 63%; }
+				body { background: #fff !important; }
 				.no-print { display: none !important; }
-				.sheet { box-shadow: none !important; margin: 0 !important; max-width: none !important; }
+				.sheet { box-shadow: none !important; margin: 0 !important; max-width: none !important; padding: 1in 1.4in !important; }
 				.entry { break-inside: avoid; }
 				a { color: #1a1a1a !important; text-decoration: none !important; }
 				.link-hairline { border-bottom: none !important; }
@@ -47,16 +49,18 @@
 	<body class="bg-slate-100 font-sans text-ink antialiased">
 		<main class="sheet mx-auto my-6 max-w-[850px] bg-white px-10 py-10 shadow-xl sm:px-14 sm:py-12 print:my-0">
 			<!-- Header -->
-			<header class="border-b border-slate-200 pb-6">
-				<h1 class="font-serif text-4xl font-600 tracking-tight text-ink sm:text-5xl">Andy Szybalski</h1>
-				<p class="mt-1 mb-3 text-sm font-light tracking-wide text-slate-400">sha · ’ball · ski</p>
-				<p class="mt-2 text-lg text-muted">Designer &amp; engineer harvesting the fruits of AI</p>
-				<ul class="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted">
-					<li><a class="font-medium text-accent link-hairline" href="https://andy.bigwhitebox.org">andy.bigwhitebox.org</a></li>
-					<li><a class="font-medium text-accent link-hairline" href="mailto:andyszy@gmail.com">andyszy@gmail.com</a></li>
-					<li><a class="font-medium text-accent link-hairline" href="https://www.linkedin.com/in/andyszy/">linkedin.com/in/andyszy</a></li>
-					<li><a class="font-medium text-accent link-hairline" href="https://x.com/andyszy">x.com/andyszy</a></li>
-				</ul>
+			<header class="pb-4">
+				<div class="flex flex-wrap items-baseline gap-x-3">
+					<h1 class="font-serif text-4xl font-600 tracking-tight text-ink sm:text-5xl">Andy Szybalski</h1>
+					<span class="text-sm font-light tracking-wide text-slate-400">sha · ’ball · ski</span>
+				</div>
+				<p class="mt-2 text-muted">
+					Designer and Engineer
+					<span class="mx-1.5 text-slate-300">·</span>
+					<a class="font-medium text-accent link-hairline" href="mailto:andyszy@gmail.com">andyszy@gmail.com</a>
+					<span class="mx-1.5 text-slate-300">·</span>
+					Honolulu
+				</p>
 			</header>
 
 			<!-- Summary -->
@@ -72,7 +76,7 @@
 			<!-- Experience -->
 			<section class="pt-8">
 				<h2 class="mb-1 text-xs font-700 uppercase tracking-[0.18em] text-accent">Experience</h2>
-				<div class="divide-y divide-slate-100">
+				<div>
 
 					<article class="entry grid grid-cols-1 gap-x-8 py-4 sm:grid-cols-[1fr_auto]">
 						<div>
@@ -154,36 +158,33 @@
 				</div>
 			</section>
 
-			<!-- Education -->
-			<section class="pt-8">
-				<h2 class="mb-2 text-xs font-700 uppercase tracking-[0.18em] text-accent">Education</h2>
-				<div class="entry grid grid-cols-1 gap-x-8 sm:grid-cols-[1fr_auto]">
+			<!-- Education / Earlier / Skills -->
+			<div class="grid grid-cols-1 gap-x-8 gap-y-8 pt-8 sm:grid-cols-3">
+				<section>
+					<h2 class="mb-2 text-xs font-700 uppercase tracking-[0.18em] text-accent">Education</h2>
 					<p class="text-sm leading-relaxed text-muted">
 						<span class="font-700 text-ink">Stanford University</span> — B.S. and M.S. Computer Science (with Honors and Distinction)
 					</p>
-					<p class="order-first text-sm font-500 text-muted sm:order-none sm:text-right">Stanford, CA</p>
-				</div>
-			</section>
+				</section>
 
-			<!-- Earlier -->
-			<section class="pt-8">
-				<h2 class="mb-2 text-xs font-700 uppercase tracking-[0.18em] text-accent">Earlier</h2>
-				<ul class="space-y-2 text-sm leading-relaxed text-muted">
-					<li><span class="font-600 text-ink">GV</span> — Entrepreneur in Residence <span class="text-slate-400">(2014)</span></li>
-					<li><span class="font-600 text-ink">Apple</span> — Software Engineering Intern, Final Cut Pro family; Objective-C <span class="text-slate-400">(2005)</span></li>
-					<li><span class="font-600 text-ink">Firaxis Games</span> — Software Engineering Intern, Sid Meier’s Civilization IV <span class="text-slate-400">(2004)</span></li>
-				</ul>
-			</section>
+				<section>
+					<h2 class="mb-2 text-xs font-700 uppercase tracking-[0.18em] text-accent">Earlier</h2>
+					<ul class="space-y-2 text-sm leading-relaxed text-muted">
+						<li><span class="font-600 text-ink">GV</span> — Entrepreneur in Residence <span class="text-slate-400">(2014)</span></li>
+						<li><span class="font-600 text-ink">Apple</span> — Software Engineering Intern, Final Cut Pro family; Objective-C <span class="text-slate-400">(2005)</span></li>
+						<li><span class="font-600 text-ink">Firaxis Games</span> — Software Engineering Intern, Sid Meier’s Civilization IV <span class="text-slate-400">(2004)</span></li>
+					</ul>
+				</section>
 
-			<!-- Skills -->
-			<section class="pt-8">
-				<h2 class="mb-2 text-xs font-700 uppercase tracking-[0.18em] text-accent">Skills</h2>
-				<p class="text-sm leading-relaxed text-muted">
-					Designing AI personalities · Shaping the editorial point of view of AI products ·
-					Product &amp; interaction design · Zero-to-one product building ·
-					Prototyping &amp; front-end engineering · AI product design
-				</p>
-			</section>
+				<section>
+					<h2 class="mb-2 text-xs font-700 uppercase tracking-[0.18em] text-accent">Skills</h2>
+					<p class="text-sm leading-relaxed text-muted">
+						Designing AI personalities · Shaping the editorial point of view of AI products ·
+						Product &amp; interaction design · Zero-to-one product building ·
+						Prototyping &amp; front-end engineering · AI product design
+					</p>
+				</section>
+			</div>
 		</main>
 
 		<footer class="no-print pb-10 text-center text-xs text-slate-400">

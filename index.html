@@ -31,6 +31,13 @@
 				text-decoration: none;
 				border-bottom: 1px solid rgba(100, 116, 139, 0.35);
 			}
+			.prose a:has(img) {
+				border-bottom: none;
+			}
+			.link-hairline {
+				text-decoration: none;
+				border-bottom: 1px solid rgba(100, 116, 139, 0.35);
+			}
 			img.portrait {
 				display: block;
 				width: 132px;
@@ -137,7 +144,7 @@
 				<p>
 					I’ve advised these seed-stage, series A, and series B startups on design and product:
 				</p>
-				<ul class="not-prose mt-5 grid list-none grid-cols-1 gap-x-8 gap-y-2.5 p-0 text-sm leading-snug text-slate-600 sm:grid-cols-2">
+				<ul class="not-prose mt-5 grid list-none grid-cols-1 gap-x-8 gap-y-[18px] p-0 text-sm leading-snug text-slate-600 sm:grid-cols-2">
 					<li><strong class="font-semibold text-slate-800">Regrello</strong> — Asana for manufacturing supply chains (acq. Salesforce)</li>
 					<li><strong class="font-semibold text-slate-800">Pepper</strong> — Connecting food suppliers with restaurants (now Series&nbsp;C)</li>
 					<li><strong class="font-semibold text-slate-800">Office Hours</strong> — Book time with knowledge professionals from around the world</li>
@@ -161,53 +168,61 @@
 				<h2 id="projects">
 					Side Projects
 				</h2>
-				<h3 id="osito">
-					Osito (2023–2024)
-				</h3>
-				<p>
-					<a href="https://osito.ai">Osito</a> was an AI group travel booking tool I built from the first commit.
-				</p>
-				<h3 id="onion-map">
-					Onion Map (2020)
-				</h3>
-				<p>
-					<a href="onionmap"><img src="onionmap/thumbnail.jpg" alt="Onion Map" class="float-left my-0 mb-3 mr-4 mt-1 w-56 rounded"></a>
-					<a href="onionmap">Onion Map</a> is a experimental map that radically deemphasizes streets, and highlights the relationship between topography and neighborhood names. It uses OpenStreetMap data, a bespoke Mapbox style, and some javascript to adjust contour colors dynamically based on the viewport.
-				</p>
-				<div class="clear-left"></div>
-				<h3 id="degen-blues">
-					Degen Blues (2022)
-				</h3>
-				<p>
-					<a href="https://degenblues.xyz">Degen Blues</a> is a smart contract that generates a new “robot music” melody every 24 hours, based on the movements in that day’s Ethereum prices. The collection launched in early 2022 with 545 unique melodies, and will continue to automatically produce a new melody each day for eternity.
-				</p>
-				<h3 id="zoom">
-					Zoom Backgrounds for Biden (2020)
-				</h3>
-				<p>
-					<a href="zoom"><img src="zoom/zoom-heads.jpg" alt="Zoom backgrounds" class="w-full rounded"></a>
-				</p>
-				<p>
-					This started out as an art project between friends, and ended up raising $10,000 in donations for the Biden campaign.
-				</p>
-				<p>
-					In the early days of the Covid pandemic, what Zoom background to “wear” to work was every person’s most visible fashion choice. With that in mind, I made a series of digital paintings intended for use as Zoom backgrounds—not too many garish colors, with plenty of room for your face in the middle. I did these paintings throughout 2020, first as a gift for a few friends, and later on a commission model, in exchange for contributions to the Biden/Harris campaign.
-				</p>
-				<h3>
-					Sutro Tower
-				</h3>
-				<p>
-					In addition to my digital work, I occasionally work on good old fashioned canvas. One of my favorite pieces is this oil painting called <b>Sutro Tower Inc</b>—it shows the antennas of various TV and radio stations on the tower:
-				</p>
-				<p>
-					<a href="art/sutro.jpg"><img src="art/sutro.jpg" alt="Sutro Tower Inc oil painting" class="w-44 rounded"></a>
-				</p>
-				<h3>
-					Older Projects
-				</h3>
-				<p>
-					If you’re looking for one of the macOS apps I’ve developed in the past, like <strong>Shellsilver</strong>, <strong>Pyper</strong>, or <strong>Lunamoth</strong>: I’m sorry, these are no longer being maintained and are not compatible with current versions of Mac OS. There are lots of great alternatives out there, though.
-				</p>
+				<div class="not-prose mt-5 grid grid-cols-1 gap-x-8 gap-y-6 text-sm leading-snug text-slate-600 sm:grid-cols-2">
+					<div class="flex items-start gap-3">
+						<a href="https://osito.ai" class="flex h-16 w-16 shrink-0 items-center justify-center rounded bg-white p-2.5 brightness-[0.97]"><img src="img/osito.jpg" alt="Osito" class="w-full"></a>
+						<div>
+							<h3 id="osito" class="m-0 text-sm font-semibold text-slate-800">
+								<a href="https://osito.ai" class="link-hairline">Osito</a>
+								<span class="ml-1 font-normal text-slate-400">2023–2024</span>
+							</h3>
+							<p class="mt-1">With a team of three, I self-funded and built an AI-powered travel booking tool. It generated a small amount of revenue before I abandoned it to work on Cove.</p>
+						</div>
+					</div>
+					<div class="flex items-start gap-3">
+						<a href="onionmap" class="shrink-0"><img src="onionmap/thumbnail.jpg" alt="Onion Map" class="h-16 w-16 rounded object-cover"></a>
+						<div>
+							<h3 id="onion-map" class="m-0 text-sm font-semibold text-slate-800">
+								<a href="onionmap" class="link-hairline">Onion Map</a>
+								<span class="ml-1 font-normal text-slate-400">2020</span>
+							</h3>
+							<p class="mt-1">An experimental map that deemphasizes streets and highlights the relationship between topography and neighborhood names, built with OpenStreetMap data and a bespoke Mapbox style.</p>
+						</div>
+					</div>
+					<div class="flex items-start gap-3">
+						<a href="https://degenblues.xyz" class="shrink-0"><img src="img/degenblues.jpg" alt="Degen Blues" class="h-16 w-16 rounded object-cover"></a>
+						<div>
+							<h3 id="degen-blues" class="m-0 text-sm font-semibold text-slate-800">
+								<a href="https://degenblues.xyz" class="link-hairline">Degen Blues</a>
+								<span class="ml-1 font-normal text-slate-400">2022</span>
+							</h3>
+							<p class="mt-1">An experiment in generative music and smart contracts.</p>
+						</div>
+					</div>
+					<div class="flex items-start gap-3">
+						<a href="zoom" class="shrink-0"><img src="zoom/zoom-heads.jpg" alt="Zoom backgrounds" class="h-16 w-16 rounded object-cover"></a>
+						<div>
+							<h3 id="zoom" class="m-0 text-sm font-semibold text-slate-800">
+								<a href="zoom" class="link-hairline">Zoom Backgrounds for Biden</a>
+								<span class="ml-1 font-normal text-slate-400">2020</span>
+							</h3>
+							<p class="mt-1">Digital paintings made as Zoom backgrounds in early Covid—started as a gift for friends and grew into a commission model that raised $10,000 for the Biden campaign.</p>
+						</div>
+					</div>
+					<div class="flex items-start gap-3">
+						<a href="art/sutro.jpg" class="shrink-0"><img src="art/sutro.jpg" alt="Sutro Tower Inc oil painting" class="h-16 w-16 rounded object-cover"></a>
+						<div>
+							<h3 class="m-0 text-sm font-semibold text-slate-800">Sutro Tower Inc.</h3>
+							<p class="mt-1">An oil painting showing the TV and radio antennas on the tower—one of my favorite pieces on canvas.</p>
+						</div>
+					</div>
+					<div class="flex items-start gap-3">
+						<div>
+							<h3 class="m-0 text-sm font-semibold text-slate-800">Older Projects</h3>
+							<p class="mt-1">I built several macOS apps but… <strong class="font-semibold text-slate-700">Shellsilver</strong>, <strong class="font-semibold text-slate-700">Pyper</strong>, and <strong class="font-semibold text-slate-700">Lunamoth</strong> are no longer maintained or compatible with current macOS—but there are lots of great alternatives out there now.</p>
+						</div>
+					</div>
+				</div>
 
 				<!-- Contact -->
 				<h2 id="contact">
